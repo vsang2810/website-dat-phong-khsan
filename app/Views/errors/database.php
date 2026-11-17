@@ -1,0 +1,1 @@
+<main style="max-width:700px;margin:10vh auto;padding:32px;background:#fff;border:1px solid #eee;border-radius:14px;font-family:Arial"><h1>Không tải được dữ liệu</h1><p>Hãy kiểm tra MySQL đang chạy, đã import database <b>lotte_hotel_booking</b> và cấu hình trong <code>config/database.php</code>.</p><a href="<?= BASE_URL ?>/login">Quay lại đăng nhập</a></main>

@@ -1,0 +1,1 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><title>404</title><body style="font-family:Arial;padding:48px"><h1>404</h1><p>Không tìm thấy trang bạn yêu cầu.</p><a href="./">Quay lại</a></body></html>
