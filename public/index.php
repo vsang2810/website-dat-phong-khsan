@@ -25,6 +25,7 @@ require BASE_PATH . '/app/Models/Hotel.php';
 require BASE_PATH . '/app/Models/RoomType.php';
 require BASE_PATH . '/app/Models/Room.php';
 require BASE_PATH . '/app/Models/Customer.php';
+require BASE_PATH . '/app/Models/Payment.php';
 require BASE_PATH . '/app/Controllers/AuthController.php';
 require BASE_PATH . '/app/Controllers/DashboardController.php';
 require BASE_PATH . '/app/Controllers/BookingController.php';
@@ -32,6 +33,7 @@ require BASE_PATH . '/app/Controllers/HotelController.php';
 require BASE_PATH . '/app/Controllers/RoomTypeController.php';
 require BASE_PATH . '/app/Controllers/RoomController.php';
 require BASE_PATH . '/app/Controllers/CustomerController.php';
+require BASE_PATH . '/app/Controllers/PaymentController.php';
 
 $router = new Router();
 require BASE_PATH . '/routes/web.php';

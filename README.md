@@ -165,3 +165,13 @@ Không cần thay đổi cấu trúc database hiện tại; chức năng sử d�
 - Không cần chạy migration hoặc nhập lại SQL: V5 sử dụng bảng `users` và `bookings` hiện có.
 
 Lưu ý: việc khóa/ngừng hoạt động tài khoản được lưu trong `users.status`. Việc chặn đăng nhập thực tế phụ thuộc vào luồng đăng nhập phía khách hàng; module quản trị này không thay đổi quy trình đăng nhập/đặt phòng hiện có.
+
+
+## Quản lý thanh toán (V6)
+
+- Truy cập **Admin → Thanh toán** để xem danh sách giao dịch, tìm theo mã giao dịch/mã đơn/thông tin khách, lọc trạng thái, phương thức và khoảng ngày; có phân trang.
+- Xem chi tiết giao dịch, số tiền, cổng thanh toán, thời gian, người xác nhận và liên kết tới đơn đặt phòng.
+- Giao dịch online không có thao tác sửa trạng thái thủ công trong Admin; chỉ được ghi nhận thành công khi có kết quả xác thực từ cổng thanh toán. Module này chưa tích hợp webhook/cổng thanh toán thực tế.
+- Giao dịch tại quầy chỉ được xác nhận khi đơn đang chờ thanh toán tại khách sạn và nhân viên xác nhận đã thực thu đủ tiền. Thao tác dùng lại workflow đặt phòng hiện tại, transaction và khóa bản ghi; đồng bộ payment thành success, booking payment_status thành paid và booking_status thành confirmed.
+- Không xóa giao dịch, không sửa số tiền giao dịch đã phát sinh và không tự đánh dấu hoàn tiền. Trạng thái refunded chỉ hiển thị dữ liệu đã được hệ thống/cổng thanh toán ghi nhận; chưa có tích hợp hoàn tiền thực tế.
+- Không cần migration: sử dụng bảng `payments`, `bookings`, `users` hiện có.

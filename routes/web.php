@@ -35,3 +35,7 @@ $router->get('/admin/customers/show', [CustomerController::class, 'show']);
 $router->get('/admin/customers/edit', [CustomerController::class, 'edit']);
 $router->post('/admin/customers/update', [CustomerController::class, 'update']);
 $router->post('/admin/customers/status', [CustomerController::class, 'status']);
+
+$router->get('/admin/payments', [PaymentController::class, 'index']);
+$router->get('/admin/payments/show', [PaymentController::class, 'show']);
+$router->post('/admin/payments/confirm-hotel', [PaymentController::class, 'confirmHotelPayment']);

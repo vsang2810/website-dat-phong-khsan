@@ -23,7 +23,7 @@
             <a class="nav-link <?= in_array(($activeMenu ?? ''), ['hotels', 'room-types'], true) ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/hotels"><span class="nav-icon">▣</span> Khách sạn &amp; loại phòng</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'rooms' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/rooms"><span class="nav-icon">▦</span> Phòng thực tế</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/customers"><span class="nav-icon">♙</span> Khách hàng</a>
-            <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">◫</span> Thanh toán <em>Sắp có</em></a>
+            <a class="nav-link <?= ($activeMenu ?? '') === 'payments' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/payments"><span class="nav-icon">◫</span> Thanh toán</a>
             <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">◇</span> Khuyến mãi <em>Sắp có</em></a>
         </nav>
         <div class="sidebar-bottom">
