@@ -246,16 +246,22 @@ CREATE TABLE IF NOT EXISTS chat_messages (
 -- SAMPLE DATA
 INSERT IGNORE INTO users (id,full_name,email,phone,password_hash,role,status) VALUES
 (1,'Quản trị viên Lotte','admin@lottehotel.vn','0901000001','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','admin','active'),
-(2,'Nguyễn Văn An','an@example.com','0901000002',NULL,'customer','active'),
-(3,'Trần Minh Anh','minhanh@example.com','0901000003',NULL,'customer','active');
+(2,'Nguyễn Văn An','an@example.com','0901000002','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','customer','active'),
+(3,'Trần Minh Anh','minhanh@example.com','0901000003','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','customer','active'),
+(4,'Khách Hàng Lotte','customer@lottehotel.vn','0901000004','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','customer','active');
 
--- Đảm bảo tài khoản quản trị mặc định hoạt động cả khi import lại vào database cũ.
+-- Đảm bảo tài khoản quản trị và khách hàng mẫu mặc định có mật khẩu 123456
 UPDATE users
 SET full_name = 'Quản trị viên Lotte',
     password_hash = '$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra',
     role = 'admin',
     status = 'active'
 WHERE email = 'admin@lottehotel.vn';
+
+UPDATE users
+SET password_hash = '$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra',
+    status = 'active'
+WHERE email IN ('an@example.com', 'minhanh@example.com', 'customer@lottehotel.vn');
 
 
 INSERT IGNORE INTO hotels (id,name,address,city,country,description,phone,email,star_rating,thumbnail) VALUES

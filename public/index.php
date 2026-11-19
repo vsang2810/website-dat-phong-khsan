@@ -19,6 +19,21 @@ require BASE_PATH . '/app/Core/Router.php';
 require BASE_PATH . '/app/Core/Auth.php';
 require BASE_PATH . '/app/Core/Csrf.php';
 
+spl_autoload_register(function (string $class): void {
+    $directories = [
+        BASE_PATH . '/app/Core/',
+        BASE_PATH . '/app/Models/',
+        BASE_PATH . '/app/Controllers/',
+    ];
+    foreach ($directories as $dir) {
+        $file = $dir . $class . '.php';
+        if (is_file($file)) {
+            require_once $file;
+            return;
+        }
+    }
+});
+
 require BASE_PATH . '/app/Models/Dashboard.php';
 require BASE_PATH . '/app/Models/Booking.php';
 require BASE_PATH . '/app/Models/Hotel.php';

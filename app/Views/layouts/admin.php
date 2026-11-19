@@ -18,6 +18,7 @@
         </a>
         <div class="sidebar-label">WORKSPACE</div>
         <nav class="nav-menu">
+            <a class="nav-link" href="<?= BASE_URL ?>/" target="_blank"><span class="nav-icon">🌐</span> Xem Website</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'dashboard' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin"><span class="nav-icon">▦</span> Tổng quan</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'bookings' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/bookings"><span class="nav-icon">▤</span> Đặt phòng</a>
             <a class="nav-link <?= in_array(($activeMenu ?? ''), ['hotels', 'room-types'], true) ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/hotels"><span class="nav-icon">▣</span> Khách sạn &amp; loại phòng</a>

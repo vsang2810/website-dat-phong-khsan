@@ -1,9 +1,45 @@
 <?php
-$router->get('/', [DashboardController::class, 'index']);
-$router->get('/login', [AuthController::class, 'showLogin']);
-$router->post('/login', [AuthController::class, 'login']);
-$router->post('/logout', [AuthController::class, 'logout']);
+declare(strict_types=1);
+
+// Client / Public Routes
+$router->get('/', [HomeController::class, 'index']);
+$router->get('/about', [HomeController::class, 'about']);
+$router->get('/services', [HomeController::class, 'services']);
+$router->get('/promotions', [HomeController::class, 'promotions']);
+$router->get('/contact', [HomeController::class, 'contact']);
+$router->post('/contact', [HomeController::class, 'submitContact']);
+
+// Rooms & Availability
+$router->get('/rooms', [ClientRoomController::class, 'index']);
+$router->get('/room-detail', [ClientRoomController::class, 'detail']);
+$router->get('/api/check-availability', [ClientRoomController::class, 'checkAvailability']);
+$router->post('/api/wishlist-toggle', [ClientRoomController::class, 'toggleWishlist']);
+
+// Booking Flow & Lookup
+$router->get('/booking', [ClientBookingController::class, 'index']);
+$router->post('/booking/checkout', [ClientBookingController::class, 'store']);
+$router->get('/booking/success', [ClientBookingController::class, 'success']);
+$router->get('/booking/lookup', [ClientBookingController::class, 'lookup']);
+$router->post('/booking/cancel', [ClientBookingController::class, 'cancel']);
+$router->post('/api/check-promotion', [ClientBookingController::class, 'checkPromotion']);
+
+// Client Auth & Account
+$router->get('/login', [ClientAuthController::class, 'showLogin']);
+$router->post('/login', [ClientAuthController::class, 'login']);
+$router->get('/register', [ClientAuthController::class, 'showRegister']);
+$router->post('/register', [ClientAuthController::class, 'register']);
+$router->post('/logout', [ClientAuthController::class, 'logout']);
+
+$router->get('/account', [ClientAuthController::class, 'account']);
+$router->post('/account/profile', [ClientAuthController::class, 'updateProfile']);
+$router->post('/account/password', [ClientAuthController::class, 'updatePassword']);
+$router->get('/my-bookings', [ClientAuthController::class, 'myBookings']);
+$router->get('/wishlist', [ClientAuthController::class, 'wishlist']);
+
+// Admin Management Portal
 $router->get('/admin', [DashboardController::class, 'index']);
+$router->get('/admin/login', [AuthController::class, 'showLogin']);
+$router->post('/admin/login', [AuthController::class, 'login']);
 
 $router->get('/admin/bookings', [BookingController::class, 'index']);
 $router->get('/admin/bookings/show', [BookingController::class, 'show']);

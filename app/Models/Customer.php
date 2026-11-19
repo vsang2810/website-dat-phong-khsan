@@ -65,6 +65,84 @@ final class Customer extends Model
         return $customer;
     }
 
+    public function findByEmail(string $email): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+        $stmt->execute(['email' => trim($email)]);
+        return $stmt->fetch() ?: null;
+    }
+
+    public function register(string $fullName, string $email, string $phone, string $password, string $gender = 'other'): int
+    {
+        $email = trim($email);
+        $phone = trim($phone);
+
+        $check = $this->db->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
+        $check->execute(['email' => $email]);
+        if ($check->fetchColumn()) {
+            throw new RuntimeException('Địa chỉ email này đã được đăng ký.');
+        }
+
+        if ($phone !== '') {
+            $checkPhone = $this->db->prepare("SELECT id FROM users WHERE phone = :phone LIMIT 1");
+            $checkPhone->execute(['phone' => $phone]);
+            if ($checkPhone->fetchColumn()) {
+                throw new RuntimeException('Số điện thoại này đã được sử dụng.');
+            }
+        }
+
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $this->db->prepare(
+            "INSERT INTO users (full_name, email, phone, password_hash, gender, role, status)
+             VALUES (:name, :email, :phone, :hash, :gender, 'customer', 'active')"
+        );
+        $stmt->execute([
+            'name' => trim($fullName),
+            'email' => $email,
+            'phone' => $phone !== '' ? $phone : null,
+            'hash' => $hash,
+            'gender' => in_array($gender, ['male', 'female', 'other'], true) ? $gender : 'other',
+        ]);
+
+        return (int)$this->db->lastInsertId();
+    }
+
+    public function updateCustomerProfile(int $id, string $fullName, string $phone, string $gender): void
+    {
+        if ($phone !== '') {
+            $stmt = $this->db->prepare('SELECT id FROM users WHERE phone = :phone AND id <> :id LIMIT 1');
+            $stmt->execute(['phone' => $phone, 'id' => $id]);
+            if ($stmt->fetchColumn()) {
+                throw new RuntimeException('Số điện thoại này đã được tài khoản khác sử dụng.');
+            }
+        }
+
+        $stmt = $this->db->prepare(
+            "UPDATE users SET full_name = :full_name, phone = :phone, gender = :gender WHERE id = :id"
+        );
+        $stmt->execute([
+            'id' => $id,
+            'full_name' => trim($fullName),
+            'phone' => $phone !== '' ? $phone : null,
+            'gender' => in_array($gender, ['male', 'female', 'other'], true) ? $gender : 'other',
+        ]);
+    }
+
+    public function updatePassword(int $userId, string $oldPassword, string $newPassword): void
+    {
+        $stmt = $this->db->prepare("SELECT password_hash FROM users WHERE id = :id LIMIT 1");
+        $stmt->execute(['id' => $userId]);
+        $currentHash = $stmt->fetchColumn();
+
+        if ($currentHash && !password_verify($oldPassword, $currentHash)) {
+            throw new RuntimeException('Mật khẩu hiện tại không chính xác.');
+        }
+
+        $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
+        $upd = $this->db->prepare("UPDATE users SET password_hash = :hash WHERE id = :id");
+        $upd->execute(['hash' => $newHash, 'id' => $userId]);
+    }
+
     public function updateProfile(int $id, array $data): void
     {
         $stmt = $this->db->prepare("SELECT id FROM users WHERE id=:id AND role='customer'");
