@@ -18,10 +18,11 @@
         </a>
         <div class="sidebar-label">WORKSPACE</div>
         <nav class="nav-menu">
-            <a class="nav-link active" href="<?= BASE_URL ?>/admin"><span class="nav-icon">▦</span> Tổng quan</a>
-            <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">▤</span> Đặt phòng <em>Sắp có</em></a>
-            <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">▣</span> Phòng khách sạn <em>Sắp có</em></a>
-            <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">♙</span> Khách hàng <em>Sắp có</em></a>
+            <a class="nav-link <?= ($activeMenu ?? '') === 'dashboard' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin"><span class="nav-icon">▦</span> Tổng quan</a>
+            <a class="nav-link <?= ($activeMenu ?? '') === 'bookings' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/bookings"><span class="nav-icon">▤</span> Đặt phòng</a>
+            <a class="nav-link <?= in_array(($activeMenu ?? ''), ['hotels', 'room-types'], true) ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/hotels"><span class="nav-icon">▣</span> Khách sạn &amp; loại phòng</a>
+            <a class="nav-link <?= ($activeMenu ?? '') === 'rooms' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/rooms"><span class="nav-icon">▦</span> Phòng thực tế</a>
+            <a class="nav-link <?= ($activeMenu ?? '') === 'customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/customers"><span class="nav-icon">♙</span> Khách hàng</a>
             <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">◫</span> Thanh toán <em>Sắp có</em></a>
             <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">◇</span> Khuyến mãi <em>Sắp có</em></a>
         </nav>

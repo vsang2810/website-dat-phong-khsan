@@ -249,6 +249,15 @@ INSERT IGNORE INTO users (id,full_name,email,phone,password_hash,role,status) VA
 (2,'Nguyễn Văn An','an@example.com','0901000002',NULL,'customer','active'),
 (3,'Trần Minh Anh','minhanh@example.com','0901000003',NULL,'customer','active');
 
+-- Đảm bảo tài khoản quản trị mặc định hoạt động cả khi import lại vào database cũ.
+UPDATE users
+SET full_name = 'Quản trị viên Lotte',
+    password_hash = '$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra',
+    role = 'admin',
+    status = 'active'
+WHERE email = 'admin@lottehotel.vn';
+
+
 INSERT IGNORE INTO hotels (id,name,address,city,country,description,phone,email,star_rating,thumbnail) VALUES
 (1,'LOTTE HOTEL HANOI','54 Liễu Giai, Ba Đình','Hà Nội','Vietnam','Khách sạn cao cấp với hệ thống phòng nghỉ hiện đại và dịch vụ chuyên nghiệp.','02433331000','info@lottehotel.vn',5,'assets/images/hotel/lotte-hotel.jpg');
 

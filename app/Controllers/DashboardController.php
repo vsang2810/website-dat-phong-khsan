@@ -11,6 +11,7 @@ class DashboardController extends Controller
             $dashboard = new Dashboard();
             $this->view('admin/dashboard', [
                 'title' => 'Tổng quan',
+            'activeMenu' => 'dashboard',
                 'stats' => $dashboard->statistics(),
                 'recentBookings' => $dashboard->recentBookings(),
                 'statusCounts' => $dashboard->bookingStatuses(),

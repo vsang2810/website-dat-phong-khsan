@@ -110,3 +110,46 @@ td small{display:block;color:#a0a4a5;font-size:9px;margin-top:4px}
 @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.status-panel{min-height:230px}}
 @media(max-width:900px){.sidebar{transform:translateX(-100%);transition:transform .25s}.sidebar.sidebar-open{transform:translateX(0)}.main-area{margin-left:0}.mobile-menu{display:block}.topbar{padding:0 20px}.page-content{padding:26px 20px}.login-page{grid-template-columns:1fr}.login-visual{display:none}.login-panel{min-height:100vh}.login-mobile-brand{display:flex;align-items:center;gap:10px;margin-bottom:48px}.login-mobile-brand strong{font-size:11px;letter-spacing:2px}.login-footer{position:static;margin-top:70px}}
 @media(max-width:560px){.stats-grid{grid-template-columns:1fr 1fr;gap:9px}.stat-card{padding:14px;min-height:125px}.stat-value{font-size:22px}.stat-top{font-size:9px}.topbar{height:60px}.system-status{display:none}.page-heading{align-items:flex-start}.page-heading h1{font-size:25px}.heading-date{padding:7px 9px}.page-content{padding:22px 13px}.panel{padding:15px}.panel-heading h2{font-size:15px}.subtle-tag{display:none}.breadcrumb{font-size:10px}}
+
+/* Booking management */
+.alert-success{background:#edf7f0;border:1px solid #d6eadb;color:#397b55;padding:11px 13px;border-radius:7px;font-size:11px;margin:0 0 16px}.booking-filter-panel{padding:17px;margin-bottom:18px}.booking-filters{display:grid;grid-template-columns:minmax(190px,1.6fr) repeat(4,minmax(120px,1fr)) auto;gap:12px;align-items:end}.booking-filters label{display:grid;gap:7px;min-width:0}.booking-filters label>span{font-size:9px;color:#858b8c;font-weight:600}.booking-filters input,.booking-filters select{height:39px;width:100%;min-width:0;border:1px solid #e8e9e6;border-radius:6px;background:#fff;padding:0 10px;font:11px "DM Sans",sans-serif;color:#3d4243}.filter-actions{display:flex;align-items:center;gap:8px}.filter-submit{height:39px;padding:0 14px;white-space:nowrap}.btn-reset{display:inline-flex;align-items:center;justify-content:center;color:#777e80;font-size:10px;padding:9px 10px;border:1px solid #e8e9e6;border-radius:6px;background:#fff;white-space:nowrap}.booking-table-panel,.detail-panel,.workflow-panel,.payment-summary-panel{padding:20px}.booking-management-table td{font-size:11px;padding:15px 12px}.table-action{font-size:10px;color:#8b765c;font-weight:700}.pagination{display:flex;justify-content:flex-end;gap:5px;border-top:1px solid var(--line);padding-top:16px;margin-top:8px}.pagination a{width:29px;height:29px;display:grid;place-items:center;border:1px solid var(--line);border-radius:5px;font-size:10px;color:#777}.pagination a.current{background:#292e30;color:#fff}.booking-detail-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.8fr);gap:18px;align-items:start}.booking-detail-main,.booking-detail-side{display:grid;gap:16px;min-width:0}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 22px}.detail-grid small,.side-info small{display:block;font-size:9px;color:#9a9fa0;margin-bottom:5px}.detail-grid strong{font-size:11px;overflow-wrap:anywhere}.request-note{margin-top:18px;padding:13px;background:#f8f8f6;border-radius:6px;font-size:11px;line-height:1.6}.money-summary{max-width:340px;margin:17px 0 0 auto;border-top:1px solid var(--line);padding-top:12px;display:grid;gap:10px}.money-summary>div{display:flex;justify-content:space-between;gap:15px;font-size:10px;color:#818889}.money-summary strong{font-size:11px;color:#454b4c}.money-summary .grand-total{border-top:1px solid var(--line);padding-top:12px;font-weight:700}.money-summary .grand-total strong{font-size:16px}.workflow-panel h2,.payment-summary-panel h2{font:600 17px "Playfair Display",serif;margin:0 0 9px}.workflow-hint{font-size:10px;line-height:1.6;padding:11px;border-radius:6px;margin:14px 0}.hint-good{background:#edf6ef;color:#4a805d}.hint-warn{background:#fff6e9;color:#98733d}.workflow-button{width:100%;min-height:42px;padding:10px 12px;margin:0 0 9px;font:600 10px "DM Sans",sans-serif}.btn-danger{width:100%;min-height:40px;background:#fff;border:1px solid #efd7d5;color:#ad5c57;border-radius:6px;font:600 10px "DM Sans",sans-serif;cursor:pointer}.side-info{padding:12px 0;border-bottom:1px solid #f0f1ef}.side-info:last-child{border:0}.side-info strong{font-size:10px;font-weight:600}
+@media(max-width:1250px){.booking-filters{grid-template-columns:repeat(3,minmax(0,1fr))}.search-field{grid-column:span 2}}
+@media(max-width:900px){.booking-detail-grid{grid-template-columns:1fr}.booking-detail-side{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.booking-filters{grid-template-columns:1fr 1fr}.search-field,.filter-actions{grid-column:span 2}.booking-detail-side{grid-template-columns:1fr}.detail-grid{gap:14px}}
+
+
+/* Hotel and room-type management */
+.simple-filter{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.simple-filter input,.simple-filter select{height:39px;min-width:190px;flex:1;border:1px solid #e8e9e6;border-radius:6px;background:#fff;padding:0 11px;font:11px "DM Sans",sans-serif;color:#3d4243}
+.simple-filter button{height:39px}
+.row-actions{display:flex;align-items:center;gap:12px;white-space:nowrap}
+.row-actions form{margin:0}
+.text-action{border:0;background:transparent;color:#9b7650;font:600 10px "DM Sans",sans-serif;cursor:pointer;padding:0}
+.management-form{padding:24px;max-width:980px}
+.form-section-title{padding-bottom:13px;margin:0 0 17px;border-bottom:1px solid var(--line)}
+.form-section-title:not(:first-child){margin-top:27px}
+.form-section-title h2{font:600 17px "Playfair Display",serif;margin:0 0 4px}
+.form-section-title p{font-size:10px;color:#929798;margin:0}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.form-grid label{display:grid;gap:7px;min-width:0}
+.form-grid label>span{font-size:10px;color:#777e80;font-weight:600}
+.form-grid input,.form-grid select,.form-grid textarea{width:100%;min-width:0;border:1px solid #e7e8e5;border-radius:6px;background:#fff;padding:10px 11px;font:11px "DM Sans",sans-serif;color:#3d4243;outline:none}
+.form-grid input,.form-grid select{height:40px}
+.form-grid textarea{resize:vertical;line-height:1.6}
+.form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus,.simple-filter input:focus,.simple-filter select:focus{border-color:#a4937c;box-shadow:0 0 0 3px #f4f0e9}
+.form-grid .wide{grid-column:span 2}
+.form-footer{display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--line);padding-top:18px;margin-top:25px}
+.form-footer .btn-primary{min-height:38px;padding:0 18px}
+.module-shortcut{display:flex;align-items:center;gap:12px;margin-top:17px;padding:15px 18px;background:#f0eee9;border-radius:7px;font-size:10px;color:#7b7f7d}
+.module-shortcut span{color:#9a8a75}
+.module-shortcut strong{color:#393f40}
+.module-shortcut a{margin-left:auto;color:#8b765c;font-weight:700}
+@media(max-width:650px){.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:span 1}.management-form{padding:16px}.simple-filter{align-items:stretch}.simple-filter input,.simple-filter select{min-width:100%}.module-shortcut{align-items:flex-start;flex-direction:column;gap:6px}.module-shortcut a{margin-left:0}}
+
+/* V4 - Actual room management */
+.room-status-form{display:flex;align-items:center;gap:5px}
+.room-status-form select{max-width:125px;height:29px;border:1px solid #e8e9e6;border-radius:5px;background:#fff;padding:0 5px;font:10px "DM Sans",sans-serif;color:#555}
+.room-status-note,.booking-management-table td small{display:block;margin-top:5px;font-size:9px;color:#8b9090;line-height:1.45}
+.room-list-hint{margin:14px 0 0;padding:11px 12px;background:#f8f7f4;border-radius:6px;color:#777e80;font-size:10px;line-height:1.6}
+.field-hint{font-size:9px;color:#929796;line-height:1.4}
+@media(max-width:850px){.room-status-form{align-items:flex-start;flex-direction:column}.room-status-form select{max-width:100%}}

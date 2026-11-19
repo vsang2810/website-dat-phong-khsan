@@ -46,6 +46,17 @@ Nếu muốn tự đặt lại mật khẩu bằng PHP CLI, chạy:
 php scripts/create_admin.php "MatKhauMoiCuaBan"
 ```
 
+Nếu đã import SQL trước đó, hãy mở phpMyAdmin → chọn database `lotte_hotel_booking` → tab SQL,
+chạy lệnh cập nhật sau để áp dụng mật khẩu mặc định cho bản ghi Admin hiện có:
+
+```sql
+UPDATE users
+SET password_hash = '$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra',
+    role = 'admin',
+    status = 'active'
+WHERE email = 'admin@lottehotel.vn';
+```
+
 ## 5. Chạy dự án
 
 ### Cách A — XAMPP Apache
@@ -107,3 +118,50 @@ scripts/
 Dashboard chỉ đọc dữ liệu. Chưa triển khai luồng xác nhận booking, chống đặt trùng phòng, check-in/check-out, hoàn tiền hoặc xử lý webhook thanh toán. Quy tắc đã thống nhất cho giai đoạn sau:
 - Online: chỉ xác nhận khi cổng thanh toán trả về thành công và được xác thực.
 - Pay at hotel: Admin/nhân viên xác nhận sau khi khách đến quầy và thanh toán.
+
+
+## Quản lý đặt phòng (V2)
+- Danh sách đơn, tìm kiếm mã đơn/tên/email/số điện thoại; lọc trạng thái, phương thức và ngày nhận phòng; phân trang.
+- Xem chi tiết khách, thời gian lưu trú, phòng, tổng tiền và lịch sử thanh toán.
+- Đơn online chỉ xác nhận khi `payment_status = paid` hoặc có giao dịch `payments.payment_status = success`.
+- Đơn thanh toán tại khách sạn chỉ xác nhận sau khi khách đến quầy và Admin/Staff xác nhận đã thu tiền; hệ thống ghi nhận giao dịch thành công rồi mới chuyển sang `confirmed`.
+- Luồng tiếp theo: `confirmed` → `checked_in` → `completed`; có thể hủy đơn trước khi nhận phòng.
+- Thao tác cập nhật dùng POST, CSRF và transaction. Không xóa cứng đơn đặt phòng.
+
+
+## Quản lý khách sạn và loại phòng (V3)
+
+- Khách sạn: xem danh sách, tìm kiếm, thêm mới, cập nhật thông tin, đổi trạng thái hoạt động.
+- Loại phòng: xem danh sách, lọc theo khách sạn, tìm kiếm, thêm mới, cập nhật và đổi trạng thái.
+- Theo dõi số loại phòng và số phòng thực tế theo từng khách sạn/loại phòng.
+- Không xóa cứng dữ liệu khách sạn hoặc loại phòng để tránh làm hỏng các liên kết với đơn đặt phòng và phòng thực tế.
+- Dữ liệu sử dụng các bảng `hotels` và `room_types` hiện có; không cần import lại SQL.
+
+Mở mục **Khách sạn & loại phòng** trên thanh menu Admin.
+
+
+## Quản lý phòng thực tế (V4)
+
+Truy cập **Admin → Phòng thực tế** để:
+- Thêm/sửa phòng với mã phòng duy nhất toàn hệ thống, tầng, loại phòng và ghi chú.
+- Tìm kiếm theo mã phòng, loại phòng, khách sạn; lọc theo khách sạn, loại phòng và trạng thái quản lý.
+- Chuyển trạng thái quản lý: Sẵn sàng (`available`), Bảo trì (`maintenance`), Ngừng hoạt động (`inactive`).
+- Xem tình trạng được suy ra từ đơn đặt phòng trong ngày: Đang sử dụng, Đã đặt hôm nay hoặc Đang giữ chỗ.
+
+**Bảo vệ dữ liệu đặt phòng:** Không cho chuyển phòng sang bảo trì/ngừng hoạt động khi phòng còn liên quan đến đơn chưa hủy/chưa hoàn tất có ngày trả phòng trong tương lai. Mã phòng không được trùng trong toàn hệ thống. Không cho đổi loại phòng nếu phòng đã có lịch sử trong `booking_rooms`.
+
+Không cần thay đổi cấu trúc database hiện tại; chức năng sử dụng các bảng `rooms`, `room_types`, `hotels`, `booking_rooms` và `bookings` đã có.
+
+
+## Quản lý khách hàng (V5)
+
+- Truy cập **Khách hàng** trên menu quản trị hoặc `/admin/customers`.
+- Danh sách chỉ hiển thị tài khoản có `users.role = 'customer'`; Admin/Staff không bị đưa vào danh sách.
+- Hỗ trợ tìm kiếm theo họ tên, email, số điện thoại; lọc trạng thái tài khoản; phân trang.
+- Xem hồ sơ khách hàng, tổng số đơn, giá trị đơn không bị hủy và lịch sử đặt phòng.
+- Chỉnh sửa họ tên, email, số điện thoại, giới tính; kiểm tra định dạng và trùng email/số điện thoại.
+- Thay đổi trạng thái tài khoản: active / inactive / blocked.
+- Không xóa khách hàng để bảo toàn khóa ngoại và lịch sử đặt phòng. Hồ sơ dùng `bookings.user_id`; dữ liệu khách chụp tại thời điểm đặt (`guest_name`, `guest_email`, `guest_phone`) không bị sửa khi cập nhật hồ sơ.
+- Không cần chạy migration hoặc nhập lại SQL: V5 sử dụng bảng `users` và `bookings` hiện có.
+
+Lưu ý: việc khóa/ngừng hoạt động tài khoản được lưu trong `users.status`. Việc chặn đăng nhập thực tế phụ thuộc vào luồng đăng nhập phía khách hàng; module quản trị này không thay đổi quy trình đăng nhập/đặt phòng hiện có.
