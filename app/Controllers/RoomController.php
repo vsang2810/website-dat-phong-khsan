@@ -30,7 +30,7 @@ final class RoomController extends Controller
         Auth::requireAdmin();
         $types = (new Room())->roomTypes();
         if (!$types) {
-            $_SESSION['flash_error'] = 'Bạn cần tạo khách sạn và loại phòng trước khi thêm phòng thực tế.';
+            $_SESSION['flash_error'] = 'Bạn cần tạo hạng phòng trước khi thêm phòng thực tế.';
             $this->redirect('/admin/room-types');
         }
         $this->view('admin/rooms/form', [

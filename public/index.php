@@ -5,6 +5,28 @@ define('BASE_PATH', dirname(__DIR__));
 $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
 define('BASE_URL', ($scriptDir === '/' || $scriptDir === '.') ? '' : rtrim($scriptDir, '/'));
 
+function asset_url(?string $path, string $default = 'assets/images/hotel-banner.png'): string
+{
+    $path = trim((string)$path);
+    if ($path === '') {
+        $path = $default;
+    }
+
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '//')) {
+        return $path;
+    }
+
+    $cleanPath = ltrim($path, '/\\');
+    $fullPath = BASE_PATH . '/public/' . $cleanPath;
+
+    $version = '';
+    if (is_file($fullPath)) {
+        $version = '?v=' . filemtime($fullPath);
+    }
+
+    return BASE_URL . '/' . $cleanPath . $version;
+}
+
 session_set_cookie_params([
     'httponly' => true,
     'samesite' => 'Lax',
@@ -18,6 +40,21 @@ require BASE_PATH . '/app/Core/Model.php';
 require BASE_PATH . '/app/Core/Router.php';
 require BASE_PATH . '/app/Core/Auth.php';
 require BASE_PATH . '/app/Core/Csrf.php';
+
+spl_autoload_register(function (string $class): void {
+    $directories = [
+        BASE_PATH . '/app/Core/',
+        BASE_PATH . '/app/Models/',
+        BASE_PATH . '/app/Controllers/',
+    ];
+    foreach ($directories as $dir) {
+        $file = $dir . $class . '.php';
+        if (is_file($file)) {
+            require_once $file;
+            return;
+        }
+    }
+});
 
 require BASE_PATH . '/app/Models/Dashboard.php';
 require BASE_PATH . '/app/Models/Booking.php';

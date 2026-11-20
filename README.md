@@ -129,15 +129,19 @@ Dashboard chỉ đọc dữ liệu. Chưa triển khai luồng xác nhận booki
 - Thao tác cập nhật dùng POST, CSRF và transaction. Không xóa cứng đơn đặt phòng.
 
 
-## Quản lý khách sạn và loại phòng (V3)
+## Quản lý hạng phòng (V3)
 
-- Khách sạn: xem danh sách, tìm kiếm, thêm mới, cập nhật thông tin, đổi trạng thái hoạt động.
-- Loại phòng: xem danh sách, lọc theo khách sạn, tìm kiếm, thêm mới, cập nhật và đổi trạng thái.
-- Theo dõi số loại phòng và số phòng thực tế theo từng khách sạn/loại phòng.
-- Không xóa cứng dữ liệu khách sạn hoặc loại phòng để tránh làm hỏng các liên kết với đơn đặt phòng và phòng thực tế.
-- Dữ liệu sử dụng các bảng `hotels` và `room_types` hiện có; không cần import lại SQL.
-
-Mở mục **Khách sạn & loại phòng** trên thanh menu Admin.
+- Hệ thống được tối ưu hóa cho mô hình quản lý **1 khách sạn duy nhất (LOTTE HOTEL HANOI)** với các hạng phòng nghỉ cao cấp:
+  - **Standard Room**: 35 m², tối đa 2 khách, 1 giường đôi, giá niêm yết 1.800.000 ₫ / đêm.
+  - **Deluxe Room**: 42 m², tối đa 2 khách, 1 giường đôi, giá niêm yết 2.500.000 ₫ / đêm.
+  - **Executive Room**: 50 m², tối đa 2 khách, 1 giường đôi, giá niêm yết 3.500.000 ₫ / đêm.
+  - **Presidential Suite**: 120 m², tối đa 4 khách, 2 giường đôi, giá niêm yết 12.000.000 ₫ / đêm.
+- Quản lý danh sách hạng phòng: tên hạng phòng, mô tả, diện tích, sức chứa tối đa, loại giường, giá niêm yết và số phòng thực tế tương ứng.
+- Thêm mới, cập nhật hạng phòng không cần chọn khách sạn thủ công (hệ thống tự động liên kết với khách sạn duy nhất).
+- Chuyển trạng thái kinh doanh: Đang bán (`active`) hoặc Tạm ngừng (`inactive`).
+- Bảng thống kê nhanh: tổng số hạng phòng, số hạng đang kinh doanh, số hạng tạm ngừng, tổng số phòng thực tế.
+- Đường dẫn quản trị: Menu **Hạng phòng** (`/admin/room-types`).
+- Cấu hình thông tin khách sạn: Menu **Thông tin khách sạn** (`/admin/hotel-info`). Các yêu cầu truy cập vào `/admin/hotels` được tự động chuyển hướng sang Quản lý hạng phòng.
 
 
 ## Quản lý phòng thực tế (V4)
@@ -175,3 +179,51 @@ Lưu ý: việc khóa/ngừng hoạt động tài khoản được lưu trong `u
 - Giao dịch tại quầy chỉ được xác nhận khi đơn đang chờ thanh toán tại khách sạn và nhân viên xác nhận đã thực thu đủ tiền. Thao tác dùng lại workflow đặt phòng hiện tại, transaction và khóa bản ghi; đồng bộ payment thành success, booking payment_status thành paid và booking_status thành confirmed.
 - Không xóa giao dịch, không sửa số tiền giao dịch đã phát sinh và không tự đánh dấu hoàn tiền. Trạng thái refunded chỉ hiển thị dữ liệu đã được hệ thống/cổng thanh toán ghi nhận; chưa có tích hợp hoàn tiền thực tế.
 - Không cần migration: sử dụng bảng `payments`, `bookings`, `users` hiện có.
+
+---
+
+## Giao diện & Chức năng Khách hàng (Client Portal)
+
+Hệ thống giao diện và chức năng dành cho khách hàng được xây dựng hoàn chỉnh, kết nối trực tiếp và đồng bộ 100% với các chức năng đã xây dựng trên trang quản trị:
+
+### 1. Các trang và chức năng chính:
+- **Trang chủ (`/`)**:
+  - Banner sang trọng chuẩn khách sạn 5 sao LOTTE HOTEL HANOI.
+  - Thanh tìm kiếm & đặt phòng nhanh (chọn chi nhánh, ngày nhận/trả phòng, số khách).
+  - Giới thiệu tổng quan khách sạn, các hạng phòng nổi bật, dịch vụ & tiện ích, ưu đãi hot và đánh giá từ khách hàng.
+- **Danh sách phòng & Tìm kiếm (`/rooms`)**:
+  - Lọc theo khách sạn, khoảng ngày, số khách, khoảng giá, loại giường.
+  - Kiểm tra số phòng trống thực tế theo thời gian thực (real-time availability) dựa trên bảng `rooms` và `bookings`.
+  - Hiển thị thông số diện tích, tiện nghi, loại giường, trạng thái phòng, nút xem chi tiết và đặt phòng ngay.
+- **Chi tiết phòng (`/room-detail?id=...`)**:
+  - Thư viện hình ảnh chất lượng cao.
+  - Thông số chi tiết: diện tích, hướng nhìn, tiện nghi phòng (`amenities`), quy định nhận/trả phòng và đánh giá của khách lưu trú.
+  - Widget tính giá động linh hoạt theo số đêm và kiểm tra phòng trống tức thì.
+  - Nút thêm vào danh sách yêu thích (Wishlist).
+- **Quy trình Đặt phòng & Thanh toán (`/booking` & `/booking/checkout`)**:
+  - **Bước 1**: Chọn phòng, ngày nhận/trả phòng, số lượng khách (tự động tính số đêm và tiền phòng).
+  - **Bước 2**: Chọn dịch vụ gia tăng (`services`: Buffet sáng, Đưa đón sân bay, Spa thư giãn, Giặt là) với số lượng tùy chọn.
+  - **Bước 3**: Áp dụng mã ưu đãi (`promotions`, VD: `WELCOME10`), hệ thống kiểm tra điều kiện và chiết khấu trực tiếp vào tổng tiền.
+  - **Bước 4**: Nhập thông tin người đặt và ghi chú đặc biệt (tự động điền nếu đã đăng nhập).
+  - **Bước 5**: Lựa chọn phương thức thanh toán:
+    - *Thanh toán trực tuyến (`online`)*: Mô phỏng chuyển khoản QR/thẻ, tự động xác nhận đơn và thanh toán thành công.
+    - *Thanh toán tại quầy (`pay_at_hotel`)*: Chờ khách đến khách sạn nhận phòng và thanh toán tại quầy lễ tân (Admin duyệt xác nhận thu tiền).
+  - Tự động gán phòng trống thực tế từ bảng `rooms`, chống đặt trùng phòng.
+- **Xác nhận đặt phòng thành công (`/booking/success?code=...`)**:
+  - Biên lai / Vé xác nhận đặt phòng đầy đủ thông tin chi tiết.
+  - Hỗ trợ in vé / lưu phiếu xác nhận, tra cứu đơn hoặc quay về trang chủ.
+- **Tra cứu đơn đặt phòng (`/booking/lookup`)**:
+  - Tra cứu bằng Mã đặt phòng (`booking_code`) và Email hoặc SĐT.
+  - Xem chi tiết trạng thái đơn, dịch vụ và lịch sử thanh toán.
+  - Hỗ trợ khách hàng gửi yêu cầu hủy đơn nếu còn trước ngày nhận phòng.
+- **Tài khoản khách hàng (`/account`, `/register`, `/login`)**:
+  - Đăng ký tài khoản khách hàng mới với mật khẩu mã hóa an toàn (`password_hash`).
+  - Đăng nhập phân quyền thông minh: Khách hàng chuyển hướng đến `/account` hoặc trang trước đó; Admin/Staff tự động vào `/admin`.
+  - Quản lý thông tin cá nhân, đổi mật khẩu.
+  - Quản lý lịch sử đặt phòng (danh sách đơn, trạng thái, hủy đơn).
+  - Danh sách phòng yêu thích (`wishlist`).
+- **Dịch vụ (`/services`) & Ưu đãi (`/promotions`)**:
+  - Danh sách chi tiết các dịch vụ cao cấp và mã voucher khuyến mãi kèm nút sử dụng ngay.
+- **Giới thiệu (`/about`) & Liên hệ (`/contact`)**:
+  - Thông tin khách sạn, kiến trúc, chính sách lưu trú.
+  - Biểu mẫu liên hệ gửi tin nhắn lưu trực tiếp vào hệ thống chat/hỗ trợ.

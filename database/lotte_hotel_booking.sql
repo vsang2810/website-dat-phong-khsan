@@ -246,16 +246,22 @@ CREATE TABLE IF NOT EXISTS chat_messages (
 -- SAMPLE DATA
 INSERT IGNORE INTO users (id,full_name,email,phone,password_hash,role,status) VALUES
 (1,'Quản trị viên Lotte','admin@lottehotel.vn','0901000001','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','admin','active'),
-(2,'Nguyễn Văn An','an@example.com','0901000002',NULL,'customer','active'),
-(3,'Trần Minh Anh','minhanh@example.com','0901000003',NULL,'customer','active');
+(2,'Nguyễn Văn An','an@example.com','0901000002','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','customer','active'),
+(3,'Trần Minh Anh','minhanh@example.com','0901000003','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','customer','active'),
+(4,'Khách Hàng Lotte','customer@lottehotel.vn','0901000004','$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra','customer','active');
 
--- Đảm bảo tài khoản quản trị mặc định hoạt động cả khi import lại vào database cũ.
+-- Đảm bảo tài khoản quản trị và khách hàng mẫu mặc định có mật khẩu 123456
 UPDATE users
 SET full_name = 'Quản trị viên Lotte',
     password_hash = '$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra',
     role = 'admin',
     status = 'active'
 WHERE email = 'admin@lottehotel.vn';
+
+UPDATE users
+SET password_hash = '$2y$12$z8szAanva0QPbmlimLUdNu.xIbKPZ7kKhrK4qQF/GoGOynqy5C0Ra',
+    status = 'active'
+WHERE email IN ('an@example.com', 'minhanh@example.com', 'customer@lottehotel.vn');
 
 
 INSERT IGNORE INTO hotels (id,name,address,city,country,description,phone,email,star_rating,thumbnail) VALUES
@@ -264,17 +270,20 @@ INSERT IGNORE INTO hotels (id,name,address,city,country,description,phone,email,
 INSERT IGNORE INTO room_types (id,hotel_id,name,description,area,max_guests,bed_type,base_price,thumbnail) VALUES
 (1,1,'Deluxe Room','Phòng nghỉ hiện đại, tiện nghi, phù hợp cho 2 khách.',42,2,'1 giường đôi',2500000,'assets/images/rooms/deluxe.jpg'),
 (2,1,'Executive Room','Phòng cao cấp với không gian rộng và tầm nhìn đẹp.',50,2,'1 giường đôi',3500000,'assets/images/rooms/executive.jpg'),
-(3,1,'Presidential Suite','Phòng tổng thống sang trọng với khu vực tiếp khách riêng.',120,4,'2 giường đôi',12000000,'assets/images/rooms/presidential.jpg');
+(3,1,'Presidential Suite','Phòng tổng thống sang trọng với khu vực tiếp khách riêng.',120,4,'2 giường đôi',12000000,'assets/images/rooms/presidential.jpg'),
+(4,1,'Standard Room','Hạng phòng tiêu chuẩn ấm cúng, thiết kế tinh tế với đầy đủ tiện nghi hiện đại, phù hợp cho 2 khách.',35,2,'1 giường đôi',1800000,'assets/images/rooms/standard.jpg');
 
 INSERT IGNORE INTO rooms (id,room_type_id,room_number,floor_number,status) VALUES
 (1,1,'1201',12,'available'),(2,1,'1202',12,'available'),
 (3,2,'1501',15,'available'),(4,2,'1502',15,'available'),
-(5,3,'2001',20,'available');
+(5,3,'2001',20,'available'),
+(6,4,'1001',10,'available'),(7,4,'1002',10,'available'),(8,4,'1003',10,'available');
 
 INSERT IGNORE INTO room_images (id,room_type_id,image_url,is_thumbnail) VALUES
 (1,1,'assets/images/rooms/deluxe.jpg',1),(2,1,'assets/images/rooms/deluxe-2.jpg',0),
 (3,2,'assets/images/rooms/executive.jpg',1),(4,2,'assets/images/rooms/executive-2.jpg',0),
-(5,3,'assets/images/rooms/presidential.jpg',1);
+(5,3,'assets/images/rooms/presidential.jpg',1),
+(6,4,'assets/images/rooms/standard.jpg',1),(7,4,'assets/images/rooms/standard-2.jpg',0);
 
 INSERT IGNORE INTO amenities (id,name,icon,description) VALUES
 (1,'WiFi miễn phí','wifi','Internet tốc độ cao'),
@@ -286,7 +295,8 @@ INSERT IGNORE INTO amenities (id,name,icon,description) VALUES
 
 INSERT IGNORE INTO room_type_amenities (room_type_id,amenity_id) VALUES
 (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4),(2,5),
-(3,1),(3,2),(3,3),(3,4),(3,5),(3,6);
+(3,1),(3,2),(3,3),(3,4),(3,5),(3,6),
+(4,1),(4,2),(4,3),(4,4),(4,6);
 
 INSERT IGNORE INTO services (id,name,description,price,image) VALUES
 (1,'Ăn sáng buffet','Buffet sáng tại nhà hàng khách sạn.',350000,'assets/images/services/buffet.jpg'),

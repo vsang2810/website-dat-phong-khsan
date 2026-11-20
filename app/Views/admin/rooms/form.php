@@ -10,8 +10,8 @@
     <div class="form-grid">
         <label><span>Mã phòng *</span><input required maxlength="20" name="room_number" value="<?= $v('room_number') ?>" placeholder="Ví dụ: 1205" pattern="[A-Za-z0-9-]{1,20}"><small class="field-hint">Chữ cái, chữ số hoặc dấu gạch ngang; không trùng mã phòng khác.</small></label>
         <label><span>Tầng</span><input type="number" min="0" max="200" name="floor_number" value="<?= $v('floor_number') ?>" placeholder="Ví dụ: 12"></label>
-        <label class="wide"><span>Loại phòng *</span><select required name="room_type_id"><option value="">Chọn loại phòng</option>
-            <?php foreach ($roomTypes as $type): ?><option value="<?= (int)$type['id'] ?>" <?= (string)($room['room_type_id'] ?? '')===(string)$type['id']?'selected':'' ?>><?= htmlspecialchars($type['hotel_name'].' — '.$type['name'], ENT_QUOTES, 'UTF-8') ?></option><?php endforeach; ?>
+        <label class="wide"><span>Hạng phòng *</span><select required name="room_type_id"><option value="">Chọn hạng phòng</option>
+            <?php foreach ($roomTypes as $type): ?><option value="<?= (int)$type['id'] ?>" <?= (string)($room['room_type_id'] ?? '')===(string)$type['id']?'selected':'' ?>><?= htmlspecialchars($type['name'], ENT_QUOTES, 'UTF-8') ?></option><?php endforeach; ?>
         </select></label>
         <label class="wide"><span>Ghi chú</span><textarea name="note" rows="4" placeholder="Ví dụ: Hướng nhìn thành phố, gần thang máy..."><?= $v('note') ?></textarea></label>
     </div>

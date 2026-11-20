@@ -3,55 +3,65 @@ declare(strict_types=1);
 
 final class HotelController extends Controller
 {
+    private Hotel $hotelModel;
+
+    public function __construct()
+    {
+        $this->hotelModel = new Hotel();
+    }
+
     public function index(): void
     {
         Auth::requireAdmin();
-        $q = trim((string)($_GET['q'] ?? ''));
-        $this->view('admin/hotels/index', [
-            'title' => 'Quản lý khách sạn',
-            'activeMenu' => 'hotels',
-            'hotels' => (new Hotel())->all($q),
-            'q' => $q,
-        ]);
+        // Website chỉ quản lý 1 khách sạn -> Chuyển hướng sang Quản lý hạng phòng
+        $this->redirect('/admin/room-types');
     }
 
-    public function create(): void
+    public function settings(): void
     {
         Auth::requireAdmin();
-        $this->view('admin/hotels/form', [
-            'title' => 'Thêm khách sạn',
-            'activeMenu' => 'hotels',
-            'hotel' => null,
-            'formAction' => BASE_URL . '/admin/hotels/store',
-        ]);
-    }
-
-    public function edit(): void
-    {
-        Auth::requireAdmin();
-        $hotel = (new Hotel())->find(max(0, (int)($_GET['id'] ?? 0)));
+        $hotel = $this->hotelModel->getDefault();
         if (!$hotel) {
-            http_response_code(404);
-            $this->view('errors/404', ['title' => 'Không tìm thấy khách sạn']);
-            return;
+            $this->redirect('/admin/room-types');
         }
-        $this->view('admin/hotels/form', [
-            'title' => 'Cập nhật khách sạn',
-            'activeMenu' => 'hotels',
+
+        $this->view('admin/hotels/settings', [
+            'title' => 'Thông tin khách sạn',
+            'activeMenu' => 'hotel-info',
             'hotel' => $hotel,
-            'formAction' => BASE_URL . '/admin/hotels/update',
+            'formAction' => BASE_URL . '/admin/hotel-info',
         ]);
     }
 
-    public function store(): void { $this->persist(null); }
-    public function update(): void { $this->persist(max(0, (int)($_POST['id'] ?? 0))); }
-
-    private function persist(?int $id): void
+    public function updateSettings(): void
     {
         Auth::requireAdmin();
         if (!Csrf::verify($_POST['_csrf'] ?? null)) {
             $_SESSION['flash_error'] = 'Phiên làm việc không hợp lệ. Vui lòng thử lại.';
-            $this->redirect('/admin/hotels');
+            $this->redirect('/admin/hotel-info');
+        }
+
+        $id = max(1, (int)($_POST['id'] ?? 1));
+        $thumbnail = trim((string)($_POST['thumbnail'] ?? 'assets/images/hotel/lotte-hotel.jpg'));
+
+        // Handle uploaded hotel image file
+        if (!empty($_FILES['thumbnail_file']['name']) && $_FILES['thumbnail_file']['error'] === UPLOAD_ERR_OK) {
+            $tmpName = $_FILES['thumbnail_file']['tmp_name'];
+            $origName = $_FILES['thumbnail_file']['name'];
+            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+            if (in_array($ext, $allowed, true)) {
+                $targetDir = BASE_PATH . '/public/assets/images/hotel';
+                if (!is_dir($targetDir)) {
+                    mkdir($targetDir, 0777, true);
+                }
+                $safeName = 'lotte-hotel.' . $ext;
+                $targetFile = $targetDir . '/' . $safeName;
+                if (move_uploaded_file($tmpName, $targetFile)) {
+                    $thumbnail = 'assets/images/hotel/' . $safeName;
+                }
+            }
         }
 
         $data = [
@@ -63,43 +73,50 @@ final class HotelController extends Controller
             'phone' => trim((string)($_POST['phone'] ?? '')),
             'email' => trim((string)($_POST['email'] ?? '')),
             'stars' => (int)($_POST['star_rating'] ?? 5),
-            'thumbnail' => trim((string)($_POST['thumbnail'] ?? '')),
+            'thumbnail' => $thumbnail,
             'check_in' => (string)($_POST['check_in_time'] ?? '14:00'),
             'check_out' => (string)($_POST['check_out_time'] ?? '12:00'),
-            'status' => in_array($_POST['status'] ?? '', ['active', 'inactive'], true) ? $_POST['status'] : 'active',
+            'status' => 'active',
         ];
 
         if ($data['name'] === '' || $data['address'] === '') {
             $_SESSION['flash_error'] = 'Tên khách sạn và địa chỉ là bắt buộc.';
-            $this->redirect($id ? '/admin/hotels/edit?id=' . $id : '/admin/hotels/create');
+            $this->redirect('/admin/hotel-info');
         }
-        if ($data['stars'] < 1 || $data['stars'] > 5) {
-            $_SESSION['flash_error'] = 'Xếp hạng sao phải từ 1 đến 5.';
-            $this->redirect($id ? '/admin/hotels/edit?id=' . $id : '/admin/hotels/create');
-        }
-        if ($data['email'] !== '' && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['flash_error'] = 'Email khách sạn không hợp lệ.';
-            $this->redirect($id ? '/admin/hotels/edit?id=' . $id : '/admin/hotels/create');
-        }
+
         try {
-            (new Hotel())->save($data, $id);
-            $_SESSION['flash_success'] = $id ? 'Đã cập nhật khách sạn.' : 'Đã thêm khách sạn.';
+            $this->hotelModel->save($data, $id);
+            $_SESSION['flash_success'] = 'Cập nhật thông tin khách sạn thành công.';
         } catch (Throwable $e) {
             error_log($e->getMessage());
-            $_SESSION['flash_error'] = 'Không thể lưu khách sạn. Vui lòng kiểm tra dữ liệu.';
+            $_SESSION['flash_error'] = 'Không thể cập nhật thông tin khách sạn.';
         }
-        $this->redirect('/admin/hotels');
+
+        $this->redirect('/admin/hotel-info');
+    }
+
+    public function create(): void
+    {
+        $this->redirect('/admin/room-types');
+    }
+
+    public function edit(): void
+    {
+        $this->redirect('/admin/hotel-info');
+    }
+
+    public function store(): void
+    {
+        $this->redirect('/admin/room-types');
+    }
+
+    public function update(): void
+    {
+        $this->redirect('/admin/room-types');
     }
 
     public function toggle(): void
     {
-        Auth::requireAdmin();
-        if (!Csrf::verify($_POST['_csrf'] ?? null)) {
-            $_SESSION['flash_error'] = 'Phiên làm việc không hợp lệ.';
-            $this->redirect('/admin/hotels');
-        }
-        (new Hotel())->toggleStatus(max(0, (int)($_POST['id'] ?? 0)));
-        $_SESSION['flash_success'] = 'Đã cập nhật trạng thái khách sạn.';
-        $this->redirect('/admin/hotels');
+        $this->redirect('/admin/room-types');
     }
 }

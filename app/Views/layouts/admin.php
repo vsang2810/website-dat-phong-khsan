@@ -18,9 +18,10 @@
         </a>
         <div class="sidebar-label">WORKSPACE</div>
         <nav class="nav-menu">
+            <a class="nav-link" href="<?= BASE_URL ?>/" target="_blank"><span class="nav-icon">🌐</span> Xem Website</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'dashboard' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin"><span class="nav-icon">▦</span> Tổng quan</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'bookings' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/bookings"><span class="nav-icon">▤</span> Đặt phòng</a>
-            <a class="nav-link <?= in_array(($activeMenu ?? ''), ['hotels', 'room-types'], true) ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/hotels"><span class="nav-icon">▣</span> Khách sạn &amp; loại phòng</a>
+            <a class="nav-link <?= ($activeMenu ?? '') === 'room-types' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/room-types"><span class="nav-icon">▣</span> Hạng phòng</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'rooms' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/rooms"><span class="nav-icon">▦</span> Phòng thực tế</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/customers"><span class="nav-icon">♙</span> Khách hàng</a>
             <a class="nav-link <?= ($activeMenu ?? '') === 'payments' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/payments"><span class="nav-icon">◫</span> Thanh toán</a>
@@ -28,7 +29,7 @@
         </nav>
         <div class="sidebar-bottom">
             <div class="sidebar-label">SYSTEM</div>
-            <a class="nav-link nav-coming" href="#" aria-disabled="true"><span class="nav-icon">⚙</span> Cài đặt <em>Sắp có</em></a>
+            <a class="nav-link <?= ($activeMenu ?? '') === 'hotel-info' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin/hotel-info"><span class="nav-icon">⚙</span> Thông tin khách sạn</a>
             <div class="sidebar-profile">
                 <div class="avatar"><?= htmlspecialchars(mb_strtoupper(mb_substr(Auth::user()['full_name'] ?? 'A', 0, 1)), ENT_QUOTES, 'UTF-8') ?></div>
                 <div class="profile-info">

@@ -61,4 +61,10 @@ final class Hotel extends Model
         );
         $stmt->execute(['id' => $id]);
     }
+
+    public function getDefault(): ?array
+    {
+        $stmt = $this->db->query("SELECT * FROM hotels ORDER BY id ASC LIMIT 1");
+        return $stmt->fetch() ?: null;
+    }
 }
