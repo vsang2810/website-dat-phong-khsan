@@ -20,11 +20,11 @@
     <div class="booking-bar">
         <form action="<?= BASE_URL ?>/rooms" method="get" class="booking-form-grid">
             <div class="form-group">
-                <label class="form-label" for="hotelSelect">Khách sạn / Chi nhánh</label>
-                <select name="hotel_id" id="hotelSelect" class="form-select">
-                    <option value="">Tất cả các chi nhánh</option>
-                    <?php foreach ($hotels as $h): ?>
-                        <option value="<?= (int)$h['id'] ?>"><?= htmlspecialchars($h['name']) ?> (<?= htmlspecialchars($h['city']) ?>)</option>
+                <label class="form-label" for="roomSelect">Hạng phòng mong muốn</label>
+                <select name="q" id="roomSelect" class="form-select">
+                    <option value="">Tất cả các hạng phòng</option>
+                    <?php foreach ($featuredRooms as $r): ?>
+                        <option value="<?= htmlspecialchars($r['name']) ?>"><?= htmlspecialchars($r['name']) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

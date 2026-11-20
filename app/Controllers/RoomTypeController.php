@@ -3,30 +3,44 @@ declare(strict_types=1);
 
 final class RoomTypeController extends Controller
 {
+    private Hotel $hotelModel;
+    private RoomType $roomTypeModel;
+
+    public function __construct()
+    {
+        $this->hotelModel = new Hotel();
+        $this->roomTypeModel = new RoomType();
+    }
+
     public function index(): void
     {
         Auth::requireAdmin();
         $q = trim((string)($_GET['q'] ?? ''));
-        $hotelId = trim((string)($_GET['hotel_id'] ?? ''));
+        $status = trim((string)($_GET['status'] ?? ''));
+
+        $hotel = $this->hotelModel->getDefault();
+        $roomTypes = $this->roomTypeModel->all($q, '', $status);
+
         $this->view('admin/room-types/index', [
-            'title' => 'Quản lý loại phòng',
+            'title' => 'Quản lý hạng phòng',
             'activeMenu' => 'room-types',
-            'roomTypes' => (new RoomType())->all($q, $hotelId),
-            'hotels' => (new Hotel())->all(),
+            'roomTypes' => $roomTypes,
+            'hotel' => $hotel,
             'q' => $q,
-            'hotelId' => $hotelId,
+            'status' => $status,
         ]);
     }
 
     public function create(): void
     {
         Auth::requireAdmin();
-        $hotels = (new Hotel())->all();
+        $hotel = $this->hotelModel->getDefault();
+
         $this->view('admin/room-types/form', [
-            'title' => 'Thêm loại phòng',
+            'title' => 'Thêm hạng phòng mới',
             'activeMenu' => 'room-types',
             'roomType' => null,
-            'hotels' => $hotels,
+            'hotel' => $hotel,
             'formAction' => BASE_URL . '/admin/room-types/store',
         ]);
     }
@@ -34,23 +48,35 @@ final class RoomTypeController extends Controller
     public function edit(): void
     {
         Auth::requireAdmin();
-        $roomType = (new RoomType())->find(max(0, (int)($_GET['id'] ?? 0)));
+        $id = max(0, (int)($_GET['id'] ?? 0));
+        $roomType = $this->roomTypeModel->find($id);
+
         if (!$roomType) {
             http_response_code(404);
-            $this->view('errors/404', ['title' => 'Không tìm thấy loại phòng']);
+            $this->view('errors/404', ['title' => 'Không tìm thấy hạng phòng']);
             return;
         }
+
+        $hotel = $this->hotelModel->find((int)$roomType['hotel_id']) ?: $this->hotelModel->getDefault();
+
         $this->view('admin/room-types/form', [
-            'title' => 'Cập nhật loại phòng',
+            'title' => 'Cập nhật hạng phòng',
             'activeMenu' => 'room-types',
             'roomType' => $roomType,
-            'hotels' => (new Hotel())->all(),
+            'hotel' => $hotel,
             'formAction' => BASE_URL . '/admin/room-types/update',
         ]);
     }
 
-    public function store(): void { $this->persist(null); }
-    public function update(): void { $this->persist(max(0, (int)($_POST['id'] ?? 0))); }
+    public function store(): void
+    {
+        $this->persist(null);
+    }
+
+    public function update(): void
+    {
+        $this->persist(max(0, (int)($_POST['id'] ?? 0)));
+    }
 
     private function persist(?int $id): void
     {
@@ -59,8 +85,15 @@ final class RoomTypeController extends Controller
             $_SESSION['flash_error'] = 'Phiên làm việc không hợp lệ.';
             $this->redirect('/admin/room-types');
         }
+
+        $hotel = $this->hotelModel->getDefault();
+        $hotelId = (int)($_POST['hotel_id'] ?? 0);
+        if ($hotelId <= 0 && $hotel) {
+            $hotelId = (int)$hotel['id'];
+        }
+
         $data = [
-            'hotel_id' => (int)($_POST['hotel_id'] ?? 0),
+            'hotel_id' => $hotelId > 0 ? $hotelId : 1,
             'name' => trim((string)($_POST['name'] ?? '')),
             'description' => trim((string)($_POST['description'] ?? '')),
             'area' => trim((string)($_POST['area'] ?? '')) === '' ? null : (float)$_POST['area'],
@@ -71,20 +104,19 @@ final class RoomTypeController extends Controller
             'status' => in_array($_POST['status'] ?? '', ['active', 'inactive'], true) ? $_POST['status'] : 'active',
         ];
 
-        $hotel = (new Hotel())->find($data['hotel_id']);
-        if (!$hotel || $data['name'] === '' || $data['base_price'] <= 0
+        if ($data['name'] === '' || $data['base_price'] <= 0
             || $data['max_guests'] < 1 || $data['max_guests'] > 20
             || ($data['area'] !== null && $data['area'] <= 0)) {
-            $_SESSION['flash_error'] = 'Vui lòng chọn khách sạn và nhập tên, diện tích, sức chứa, giá hợp lệ.';
+            $_SESSION['flash_error'] = 'Vui lòng nhập tên hạng phòng, diện tích, sức chứa và giá niêm yết hợp lệ.';
             $this->redirect($id ? '/admin/room-types/edit?id=' . $id : '/admin/room-types/create');
         }
 
         try {
-            (new RoomType())->save($data, $id);
-            $_SESSION['flash_success'] = $id ? 'Đã cập nhật loại phòng.' : 'Đã thêm loại phòng.';
+            $this->roomTypeModel->save($data, $id);
+            $_SESSION['flash_success'] = $id ? 'Đã cập nhật hạng phòng thành công.' : 'Đã thêm hạng phòng mới thành công.';
         } catch (Throwable $e) {
             error_log($e->getMessage());
-            $_SESSION['flash_error'] = 'Không thể lưu loại phòng. Vui lòng kiểm tra dữ liệu.';
+            $_SESSION['flash_error'] = 'Không thể lưu hạng phòng. Vui lòng kiểm tra dữ liệu.';
         }
         $this->redirect('/admin/room-types');
     }
@@ -96,8 +128,9 @@ final class RoomTypeController extends Controller
             $_SESSION['flash_error'] = 'Phiên làm việc không hợp lệ.';
             $this->redirect('/admin/room-types');
         }
-        (new RoomType())->toggleStatus(max(0, (int)($_POST['id'] ?? 0)));
-        $_SESSION['flash_success'] = 'Đã cập nhật trạng thái loại phòng.';
+
+        $this->roomTypeModel->toggleStatus(max(0, (int)($_POST['id'] ?? 0)));
+        $_SESSION['flash_success'] = 'Đã cập nhật trạng thái hạng phòng.';
         $this->redirect('/admin/room-types');
     }
 }

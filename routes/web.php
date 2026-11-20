@@ -46,6 +46,8 @@ $router->get('/admin/bookings/show', [BookingController::class, 'show']);
 $router->post('/admin/bookings/update', [BookingController::class, 'update']);
 
 $router->get('/admin/hotels', [HotelController::class, 'index']);
+$router->get('/admin/hotel-info', [HotelController::class, 'settings']);
+$router->post('/admin/hotel-info', [HotelController::class, 'updateSettings']);
 $router->get('/admin/hotels/create', [HotelController::class, 'create']);
 $router->post('/admin/hotels/store', [HotelController::class, 'store']);
 $router->get('/admin/hotels/edit', [HotelController::class, 'edit']);

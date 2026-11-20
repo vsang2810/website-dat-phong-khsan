@@ -5,28 +5,35 @@ final class RoomType extends Model
 {
     private const BOOKING_BLOCK_STATUSES = "('pending_payment','pending_hotel_payment','confirmed','checked_in')";
 
-    public function all(string $keyword = '', string $hotelId = ''): array
+    public function all(string $keyword = '', string $hotelId = '', string $status = ''): array
     {
         $where = [];
         $params = [];
         if ($keyword !== '') {
-            $where[] = '(rt.name LIKE :q_name OR rt.bed_type LIKE :q_bed OR h.name LIKE :q_hotel)';
+            $where[] = '(rt.name LIKE :q_name OR rt.bed_type LIKE :q_bed OR rt.description LIKE :q_desc)';
             $like = '%' . $keyword . '%';
             $params['q_name'] = $like;
             $params['q_bed'] = $like;
-            $params['q_hotel'] = $like;
+            $params['q_desc'] = $like;
         }
         if ($hotelId !== '' && ctype_digit($hotelId)) {
             $where[] = 'rt.hotel_id = :hotel_id';
             $params['hotel_id'] = (int) $hotelId;
         }
+        if ($status !== '' && in_array($status, ['active', 'inactive'], true)) {
+            $where[] = 'rt.status = :status';
+            $params['status'] = $status;
+        }
         $sql = "SELECT rt.*, h.name AS hotel_name,
-                       (SELECT COUNT(*) FROM rooms r WHERE r.room_type_id = rt.id) AS room_count
+                       (SELECT COUNT(*) FROM rooms r WHERE r.room_type_id = rt.id) AS room_count,
+                       (SELECT COUNT(*) FROM rooms r WHERE r.room_type_id = rt.id AND r.status = 'available') AS available_room_count,
+                       (SELECT COUNT(*) FROM room_images ri WHERE ri.room_type_id = rt.id) AS image_count,
+                       (SELECT COUNT(*) FROM room_type_amenities rta WHERE rta.room_type_id = rt.id) AS amenity_count
                 FROM room_types rt INNER JOIN hotels h ON h.id = rt.hotel_id";
         if ($where) {
             $sql .= ' WHERE ' . implode(' AND ', $where);
         }
-        $sql .= ' ORDER BY h.name, rt.name';
+        $sql .= ' ORDER BY rt.base_price ASC, rt.id ASC';
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchAll();

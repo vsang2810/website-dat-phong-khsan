@@ -15,15 +15,8 @@
     <div class="booking-bar" style="margin-bottom: 40px; box-shadow: var(--shadow-sm);">
         <form action="<?= BASE_URL ?>/rooms" method="get" class="booking-form-grid" style="grid-template-columns: 1.2fr 1fr 1fr 0.9fr 1fr auto;">
             <div class="form-group">
-                <label class="form-label" for="filterHotel">Khách sạn</label>
-                <select name="hotel_id" id="filterHotel" class="form-select">
-                    <option value="">Tất cả khách sạn</option>
-                    <?php foreach ($hotels as $h): ?>
-                        <option value="<?= (int)$h['id'] ?>" <?= ($filters['hotel_id'] == $h['id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($h['name']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <label class="form-label" for="filterSearch">Tìm kiếm hạng phòng</label>
+                <input type="text" name="q" id="filterSearch" class="form-control" value="<?= htmlspecialchars($filters['keyword'] ?? '') ?>" placeholder="Tên phòng, giường...">
             </div>
 
             <div class="form-group">

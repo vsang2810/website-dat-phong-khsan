@@ -129,15 +129,15 @@ Dashboard chỉ đọc dữ liệu. Chưa triển khai luồng xác nhận booki
 - Thao tác cập nhật dùng POST, CSRF và transaction. Không xóa cứng đơn đặt phòng.
 
 
-## Quản lý khách sạn và loại phòng (V3)
+## Quản lý hạng phòng (V3)
 
-- Khách sạn: xem danh sách, tìm kiếm, thêm mới, cập nhật thông tin, đổi trạng thái hoạt động.
-- Loại phòng: xem danh sách, lọc theo khách sạn, tìm kiếm, thêm mới, cập nhật và đổi trạng thái.
-- Theo dõi số loại phòng và số phòng thực tế theo từng khách sạn/loại phòng.
-- Không xóa cứng dữ liệu khách sạn hoặc loại phòng để tránh làm hỏng các liên kết với đơn đặt phòng và phòng thực tế.
-- Dữ liệu sử dụng các bảng `hotels` và `room_types` hiện có; không cần import lại SQL.
-
-Mở mục **Khách sạn & loại phòng** trên thanh menu Admin.
+- Hệ thống được tối ưu hóa cho mô hình quản lý **1 khách sạn duy nhất (LOTTE HOTEL HANOI)** với các hạng phòng nghỉ cao cấp.
+- Quản lý danh sách hạng phòng: tên hạng phòng, mô tả, diện tích, sức chứa tối đa, loại giường, giá niêm yết và số phòng thực tế tương ứng.
+- Thêm mới, cập nhật hạng phòng không cần chọn khách sạn thủ công (hệ thống tự động liên kết với khách sạn duy nhất).
+- Chuyển trạng thái kinh doanh: Đang bán (`active`) hoặc Tạm ngừng (`inactive`).
+- Bảng thống kê nhanh: tổng số hạng phòng, số hạng đang kinh doanh, số hạng tạm ngừng, tổng số phòng thực tế.
+- Đường dẫn quản trị: Menu **Hạng phòng** (`/admin/room-types`).
+- Cấu hình thông tin khách sạn: Menu **Thông tin khách sạn** (`/admin/hotel-info`). Các yêu cầu truy cập vào `/admin/hotels` được tự động chuyển hướng sang Quản lý hạng phòng.
 
 
 ## Quản lý phòng thực tế (V4)

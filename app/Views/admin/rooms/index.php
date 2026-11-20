@@ -19,12 +19,9 @@ $statusLabels = [
 
 <div class="panel booking-filter-panel">
     <form method="get" action="<?= BASE_URL ?>/admin/rooms" class="simple-filter">
-        <input type="search" name="q" value="<?= $esc($filters['q']) ?>" placeholder="Tìm mã phòng, loại phòng, khách sạn">
-        <select name="hotel_id"><option value="">Tất cả khách sạn</option>
-            <?php foreach ($hotels as $hotel): ?><option value="<?= (int)$hotel['id'] ?>" <?= $filters['hotel_id']===(string)$hotel['id']?'selected':'' ?>><?= $esc($hotel['name']) ?></option><?php endforeach; ?>
-        </select>
-        <select name="room_type_id"><option value="">Tất cả loại phòng</option>
-            <?php foreach ($roomTypes as $type): ?><option value="<?= (int)$type['id'] ?>" <?= $filters['room_type_id']===(string)$type['id']?'selected':'' ?>><?= $esc($type['hotel_name'].' — '.$type['name']) ?></option><?php endforeach; ?>
+        <input type="search" name="q" value="<?= $esc($filters['q']) ?>" placeholder="Tìm mã phòng, hạng phòng, ghi chú...">
+        <select name="room_type_id"><option value="">Tất cả hạng phòng</option>
+            <?php foreach ($roomTypes as $type): ?><option value="<?= (int)$type['id'] ?>" <?= $filters['room_type_id']===(string)$type['id']?'selected':'' ?>><?= $esc($type['name']) ?></option><?php endforeach; ?>
         </select>
         <select name="status"><option value="">Mọi trạng thái quản lý</option>
             <option value="available" <?= $filters['base_status']==='available'?'selected':'' ?>>Sẵn sàng</option>
@@ -38,13 +35,13 @@ $statusLabels = [
 <div class="panel booking-table-panel">
     <div class="panel-heading"><div><span class="eyebrow">ROOM LIST</span><h2>Danh sách phòng</h2></div><span class="subtle-tag"><?= count($rooms) ?> phòng</span></div>
     <div class="table-wrap"><table class="booking-management-table">
-        <thead><tr><th>MÃ PHÒNG</th><th>KHÁCH SẠN / LOẠI PHÒNG</th><th>TẦNG</th><th>TÌNH TRẠNG</th><th>ĐƠN ĐANG LIÊN QUAN</th><th>THAO TÁC</th></tr></thead>
+        <thead><tr><th>MÃ PHÒNG</th><th>HẠNG PHÒNG</th><th>TẦNG</th><th>TÌNH TRẠNG</th><th>ĐƠN ĐANG LIÊN QUAN</th><th>THAO TÁC</th></tr></thead>
         <tbody>
         <?php if (!$rooms): ?><tr><td colspan="6" class="empty-state">Chưa có phòng phù hợp. Hãy thêm phòng thực tế đầu tiên.</td></tr>
         <?php else: foreach ($rooms as $room): $ds=$statusLabels[$room['display_status']] ?? $statusLabels[$room['status']]; ?>
             <tr>
                 <td><strong><?= $esc($room['room_number']) ?></strong></td>
-                <td><strong><?= $esc($room['hotel_name']) ?></strong><small><?= $esc($room['room_type_name']) ?></small></td>
+                <td><strong style="color: var(--ink);"><?= $esc($room['room_type_name']) ?></strong></td>
                 <td><?= $room['floor_number'] !== null ? 'Tầng '.(int)$room['floor_number'] : '—' ?></td>
                 <td><span class="status <?= $ds[1] ?>"><?= $ds[0] ?></span>
                     <?php if ($room['display_status'] !== $room['status']): ?><small class="room-status-note">Trạng thái quản lý: <?= $esc($statusLabels[$room['status']][0]) ?></small><?php endif; ?>
