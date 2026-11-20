@@ -36,7 +36,7 @@
                     </div>
 
                     <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light);">
-                        <img src="<?= BASE_URL . '/' . htmlspecialchars($room['thumbnail'] ?: 'assets/images/hotel-banner.png') ?>" alt="<?= htmlspecialchars($room['name']) ?>" style="width: 120px; height: 80px; object-fit: cover; border-radius: var(--radius-sm);" onerror="this.src='<?= BASE_URL ?>/assets/images/hotel-banner.png'">
+                        <img src="<?= htmlspecialchars(asset_url($room['thumbnail'] ?? '')) ?>" alt="<?= htmlspecialchars($room['name']) ?>" style="width: 120px; height: 80px; object-fit: cover; border-radius: var(--radius-sm);" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
                         <div>
                             <span class="room-card-hotel"><?= htmlspecialchars($room['hotel_name']) ?></span>
                             <h4 style="margin: 0 0 6px; font-size: 18px;"><?= htmlspecialchars($room['name']) ?></h4>

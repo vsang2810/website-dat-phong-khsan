@@ -15,7 +15,7 @@
 
     <!-- IMAGE BANNER -->
     <div style="border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 50px; height: 420px; box-shadow: var(--shadow-md);">
-        <img src="<?= BASE_URL ?>/assets/images/hotel-banner.png" alt="Lotte Hotel Hanoi" style="width: 100%; height: 100%; object-fit: cover;">
+        <img src="<?= htmlspecialchars(asset_url($hotel['thumbnail'] ?? 'assets/images/hotel/lotte-hotel.jpg')) ?>" alt="<?= htmlspecialchars($hotel['name'] ?? 'LOTTE HOTEL HANOI') ?>" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
     </div>
 
     <!-- MAIN STORY -->

@@ -31,21 +31,21 @@
     <!-- GALLERY SECTION -->
     <div class="gallery-grid">
         <div class="gallery-main">
-            <img id="detailMainImage" src="<?= BASE_URL . '/' . htmlspecialchars($room['thumbnail'] ?: 'assets/images/hotel-banner.png') ?>" alt="<?= htmlspecialchars($room['name']) ?>" onerror="this.src='<?= BASE_URL ?>/assets/images/hotel-banner.png'">
+            <img id="detailMainImage" src="<?= htmlspecialchars(asset_url($room['thumbnail'] ?? '')) ?>" alt="<?= htmlspecialchars($room['name']) ?>" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
         </div>
         <div class="gallery-thumbs">
             <?php if (!empty($room['images'])): ?>
                 <?php foreach (array_slice($room['images'], 0, 2) as $img): ?>
                     <div class="gallery-thumb-item">
-                        <img src="<?= BASE_URL . '/' . htmlspecialchars($img['image_url']) ?>" alt="Thumbnail" class="js-gallery-thumb" style="cursor: pointer;" onerror="this.src='<?= BASE_URL ?>/assets/images/hotel-banner.png'">
+                        <img src="<?= htmlspecialchars(asset_url($img['image_url'] ?? '')) ?>" alt="Thumbnail" class="js-gallery-thumb" style="cursor: pointer;" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="gallery-thumb-item">
-                    <img src="<?= BASE_URL ?>/assets/images/hotel-banner.png" alt="Thumbnail" class="js-gallery-thumb" style="cursor: pointer;">
+                    <img src="<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>" alt="Thumbnail" class="js-gallery-thumb" style="cursor: pointer;">
                 </div>
                 <div class="gallery-thumb-item">
-                    <img src="<?= BASE_URL ?>/assets/images/hotel-banner.png" alt="Thumbnail" class="js-gallery-thumb" style="cursor: pointer;">
+                    <img src="<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>" alt="Thumbnail" class="js-gallery-thumb" style="cursor: pointer;">
                 </div>
             <?php endif; ?>
         </div>

@@ -399,7 +399,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   min-height: 580px;
   background-color: #1f2226;
-  background-image: linear-gradient(rgba(17, 20, 24, 0.65), rgba(17, 20, 24, 0.75)), url('../images/hotel-banner.png');
+  background-image: linear-gradient(rgba(17, 20, 24, 0.65), rgba(17, 20, 24, 0.75)), url('../images/hotel/lotte-hotel.jpg');
   background-size: cover;
   background-position: center;
   display: flex;

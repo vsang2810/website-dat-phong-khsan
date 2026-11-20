@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/client.css">
+    <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/client.css')) ?>">
     <script>
         window.BASE_URL = <?= json_encode(BASE_URL) ?>;
     </script>
@@ -192,6 +192,6 @@
     </div>
 </footer>
 
-<script src="<?= BASE_URL ?>/assets/js/client.js"></script>
+<script src="<?= htmlspecialchars(asset_url('assets/js/client.js')) ?>"></script>
 </body>
 </html>

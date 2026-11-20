@@ -92,6 +92,28 @@ final class RoomTypeController extends Controller
             $hotelId = (int)$hotel['id'];
         }
 
+        $thumbnail = trim((string)($_POST['thumbnail'] ?? ''));
+
+        // Handle file upload if provided
+        if (!empty($_FILES['thumbnail_file']['name']) && $_FILES['thumbnail_file']['error'] === UPLOAD_ERR_OK) {
+            $tmpName = $_FILES['thumbnail_file']['tmp_name'];
+            $origName = $_FILES['thumbnail_file']['name'];
+            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+            if (in_array($ext, $allowed, true)) {
+                $targetDir = BASE_PATH . '/public/assets/images/rooms';
+                if (!is_dir($targetDir)) {
+                    mkdir($targetDir, 0777, true);
+                }
+                $safeName = 'room_' . ($id ?: time()) . '_' . uniqid() . '.' . $ext;
+                $targetFile = $targetDir . '/' . $safeName;
+                if (move_uploaded_file($tmpName, $targetFile)) {
+                    $thumbnail = 'assets/images/rooms/' . $safeName;
+                }
+            }
+        }
+
         $data = [
             'hotel_id' => $hotelId > 0 ? $hotelId : 1,
             'name' => trim((string)($_POST['name'] ?? '')),
@@ -100,7 +122,7 @@ final class RoomTypeController extends Controller
             'max_guests' => (int)($_POST['max_guests'] ?? 2),
             'bed_type' => trim((string)($_POST['bed_type'] ?? '')),
             'base_price' => (float)($_POST['base_price'] ?? 0),
-            'thumbnail' => trim((string)($_POST['thumbnail'] ?? '')),
+            'thumbnail' => $thumbnail,
             'status' => in_array($_POST['status'] ?? '', ['active', 'inactive'], true) ? $_POST['status'] : 'active',
         ];
 
@@ -112,7 +134,23 @@ final class RoomTypeController extends Controller
         }
 
         try {
-            $this->roomTypeModel->save($data, $id);
+            $savedId = $this->roomTypeModel->save($data, $id);
+
+            // Sync with room_images table
+            if ($thumbnail !== '') {
+                $db = Database::connection();
+                $checkImg = $db->prepare("SELECT id FROM room_images WHERE room_type_id = :type_id AND is_thumbnail = 1 LIMIT 1");
+                $checkImg->execute(['type_id' => $savedId]);
+                $thumbImgId = $checkImg->fetchColumn();
+                if ($thumbImgId) {
+                    $updImg = $db->prepare("UPDATE room_images SET image_url = :url WHERE id = :id");
+                    $updImg->execute(['url' => $thumbnail, 'id' => $thumbImgId]);
+                } else {
+                    $insImg = $db->prepare("INSERT INTO room_images (room_type_id, image_url, is_thumbnail) VALUES (:type_id, :url, 1)");
+                    $insImg->execute(['type_id' => $savedId, 'url' => $thumbnail]);
+                }
+            }
+
             $_SESSION['flash_success'] = $id ? 'Đã cập nhật hạng phòng thành công.' : 'Đã thêm hạng phòng mới thành công.';
         } catch (Throwable $e) {
             error_log($e->getMessage());

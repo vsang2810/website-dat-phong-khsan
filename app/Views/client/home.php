@@ -1,5 +1,9 @@
+<?php
+    $hotelImg = !empty($hotel['thumbnail']) ? $hotel['thumbnail'] : 'assets/images/hotel/lotte-hotel.jpg';
+    $heroBgUrl = asset_url($hotelImg);
+?>
 <!-- HERO SECTION -->
-<section class="hero-section">
+<section class="hero-section" style="background-image: linear-gradient(rgba(17, 20, 24, 0.65), rgba(17, 20, 24, 0.75)), url('<?= htmlspecialchars($heroBgUrl) ?>');">
     <div class="container">
         <div class="hero-content">
             <span class="hero-eyebrow">✦ CHUẨN MỰC NGHỈ DƯỠNG 5 SAO QUỐC TẾ ✦</span>
@@ -69,7 +73,7 @@
             <?php foreach ($featuredRooms as $room): ?>
                 <div class="room-card">
                     <div class="room-image-wrap">
-                        <img src="<?= BASE_URL . '/' . htmlspecialchars($room['thumbnail'] ?: 'assets/images/hotel-banner.png') ?>" alt="<?= htmlspecialchars($room['name']) ?>" class="room-image" onerror="this.src='<?= BASE_URL ?>/assets/images/hotel-banner.png'">
+                        <img src="<?= htmlspecialchars(asset_url($room['thumbnail'] ?? '')) ?>" alt="<?= htmlspecialchars($room['name']) ?>" class="room-image" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
                         <span class="room-badge-avail">Còn phòng trống</span>
                         <div class="room-price-badge">
                             Từ <strong><?= number_format((float)$room['base_price'], 0, ',', '.') ?> ₫</strong> / đêm
@@ -124,7 +128,7 @@
     <div class="container">
         <div class="intro-grid">
             <div class="intro-img-wrap">
-                <img src="<?= BASE_URL ?>/assets/images/hotel-banner.png" alt="Lotte Hotel Hanoi View" style="height: 440px; width: 100%; object-fit: cover;">
+                <img src="<?= htmlspecialchars(asset_url($hotel['thumbnail'] ?? 'assets/images/hotel/lotte-hotel.jpg')) ?>" alt="<?= htmlspecialchars($hotel['name'] ?? 'Lotte Hotel Hanoi') ?>" style="height: 440px; width: 100%; object-fit: cover;" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
                 <div class="intro-badge">
                     <strong>5-STAR LUXURY</strong>
                     <span>Biểu tượng lưu trú sang trọng tại Hà Nội</span>

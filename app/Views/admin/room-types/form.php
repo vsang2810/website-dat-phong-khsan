@@ -15,7 +15,7 @@
     <?php unset($_SESSION['flash_error']); ?>
 <?php endif; ?>
 
-<form class="panel management-form" method="post" action="<?= htmlspecialchars($formAction, ENT_QUOTES, 'UTF-8') ?>">
+<form class="panel management-form" method="post" action="<?= htmlspecialchars($formAction, ENT_QUOTES, 'UTF-8') ?>" enctype="multipart/form-data">
     <input type="hidden" name="_csrf" value="<?= htmlspecialchars(Csrf::token(), ENT_QUOTES, 'UTF-8') ?>">
     <input type="hidden" name="hotel_id" value="<?= (int)($hotel['id'] ?? 1) ?>">
     <?php if ($roomType): ?>
@@ -61,11 +61,29 @@
             </select>
         </label>
 
-        <label class="wide">
-            <span>Đường dẫn ảnh đại diện (Thumbnail)</span>
-            <input name="thumbnail" value="<?= $v('thumbnail') ?>" placeholder="assets/images/rooms/deluxe.jpg">
-            <small style="color: var(--muted); font-size: 11px; margin-top: 4px; display: block;">Ảnh mẫu hoặc đường dẫn tương đối trong thư mục public/assets/images/rooms/.</small>
-        </label>
+        <div class="wide" style="border: 1px dashed var(--line); border-radius: 8px; padding: 18px; background: #fafafa; margin-bottom: 12px;">
+            <span style="font-weight: 700; font-size: 13px; display: block; margin-bottom: 10px;">Hình ảnh đại diện (Thumbnail)</span>
+            <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+                <?php if (!empty($roomType['thumbnail'])): ?>
+                    <div>
+                        <small style="display: block; color: var(--muted); margin-bottom: 6px;">Ảnh hiện tại:</small>
+                        <img src="<?= htmlspecialchars(asset_url($roomType['thumbnail'])) ?>" alt="Preview" style="width: 140px; height: 95px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line);">
+                    </div>
+                <?php endif; ?>
+
+                <div style="flex: 1; min-width: 260px;">
+                    <label style="margin-bottom: 10px; display: block;">
+                        <span style="font-size: 12px; color: var(--ink);">Tải lên ảnh mới từ máy tính:</span>
+                        <input type="file" name="thumbnail_file" accept="image/*" style="padding: 6px; border: 1px solid var(--line); border-radius: 4px; width: 100%; background: #fff;">
+                    </label>
+
+                    <label style="display: block;">
+                        <span style="font-size: 12px; color: var(--muted);">Hoặc nhập đường dẫn / URL ảnh:</span>
+                        <input name="thumbnail" value="<?= $v('thumbnail') ?>" placeholder="assets/images/rooms/deluxe.jpg hoặc https://..." style="padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; width: 100%;">
+                    </label>
+                </div>
+            </div>
+        </div>
 
         <label class="wide">
             <span>Mô tả chi tiết hạng phòng</span>

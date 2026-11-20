@@ -244,7 +244,7 @@
                             <?php foreach ($wishlist as $room): ?>
                                 <div class="room-card">
                                     <div class="room-image-wrap" style="height: 180px;">
-                                        <img src="<?= BASE_URL . '/' . htmlspecialchars($room['thumbnail'] ?: 'assets/images/hotel-banner.png') ?>" alt="<?= htmlspecialchars($room['name']) ?>" class="room-image" onerror="this.src='<?= BASE_URL ?>/assets/images/hotel-banner.png'">
+                                        <img src="<?= htmlspecialchars(asset_url($room['thumbnail'] ?? '')) ?>" alt="<?= htmlspecialchars($room['name']) ?>" class="room-image" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
                                         <div class="room-price-badge">
                                             <?= number_format((float)$room['base_price'], 0, ',', '.') ?> ₫
                                         </div>

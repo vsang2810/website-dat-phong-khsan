@@ -5,6 +5,28 @@ define('BASE_PATH', dirname(__DIR__));
 $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
 define('BASE_URL', ($scriptDir === '/' || $scriptDir === '.') ? '' : rtrim($scriptDir, '/'));
 
+function asset_url(?string $path, string $default = 'assets/images/hotel-banner.png'): string
+{
+    $path = trim((string)$path);
+    if ($path === '') {
+        $path = $default;
+    }
+
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '//')) {
+        return $path;
+    }
+
+    $cleanPath = ltrim($path, '/\\');
+    $fullPath = BASE_PATH . '/public/' . $cleanPath;
+
+    $version = '';
+    if (is_file($fullPath)) {
+        $version = '?v=' . filemtime($fullPath);
+    }
+
+    return BASE_URL . '/' . $cleanPath . $version;
+}
+
 session_set_cookie_params([
     'httponly' => true,
     'samesite' => 'Lax',

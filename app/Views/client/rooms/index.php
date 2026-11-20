@@ -86,7 +86,7 @@
                 ?>
                 <div class="room-card">
                     <div class="room-image-wrap">
-                        <img src="<?= BASE_URL . '/' . htmlspecialchars($room['thumbnail'] ?: 'assets/images/hotel-banner.png') ?>" alt="<?= htmlspecialchars($room['name']) ?>" class="room-image" onerror="this.src='<?= BASE_URL ?>/assets/images/hotel-banner.png'">
+                        <img src="<?= htmlspecialchars(asset_url($room['thumbnail'] ?? '')) ?>" alt="<?= htmlspecialchars($room['name']) ?>" class="room-image" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
 
                         <?php if ($isAvailable): ?>
                             <span class="room-badge-avail"><?= $availText ?></span>

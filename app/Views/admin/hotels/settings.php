@@ -18,7 +18,7 @@
     <?php unset($_SESSION['flash_error']); ?>
 <?php endif; ?>
 
-<form class="panel management-form" method="post" action="<?= htmlspecialchars($formAction, ENT_QUOTES, 'UTF-8') ?>">
+<form class="panel management-form" method="post" action="<?= htmlspecialchars($formAction, ENT_QUOTES, 'UTF-8') ?>" enctype="multipart/form-data">
     <input type="hidden" name="_csrf" value="<?= htmlspecialchars(Csrf::token(), ENT_QUOTES, 'UTF-8') ?>">
     <input type="hidden" name="id" value="<?= (int)($hotel['id'] ?? 1) ?>">
 
@@ -28,6 +28,29 @@
     </div>
 
     <div class="form-grid">
+        <div class="wide" style="border: 1px dashed var(--line); border-radius: 8px; padding: 18px; background: #fafafa; margin-bottom: 12px;">
+            <span style="font-weight: 700; font-size: 13px; display: block; margin-bottom: 10px;">Hình ảnh khách sạn (lotte-hotel.jpg)</span>
+            <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+                <?php if (!empty($hotel['thumbnail'])): ?>
+                    <div>
+                        <small style="display: block; color: var(--muted); margin-bottom: 6px;">Ảnh hiện tại:</small>
+                        <img src="<?= htmlspecialchars(asset_url($hotel['thumbnail'])) ?>" alt="Hotel Preview" style="width: 180px; height: 110px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line);">
+                    </div>
+                <?php endif; ?>
+
+                <div style="flex: 1; min-width: 260px;">
+                    <label style="margin-bottom: 10px; display: block;">
+                        <span style="font-size: 12px; color: var(--ink);">Tải lên ảnh khách sạn mới từ máy tính:</span>
+                        <input type="file" name="thumbnail_file" accept="image/*" style="padding: 6px; border: 1px solid var(--line); border-radius: 4px; width: 100%; background: #fff;">
+                    </label>
+
+                    <label style="display: block;">
+                        <span style="font-size: 12px; color: var(--muted);">Hoặc đường dẫn / URL ảnh:</span>
+                        <input name="thumbnail" value="<?= $v('thumbnail') ?>" placeholder="assets/images/hotel/lotte-hotel.jpg" style="padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; width: 100%;">
+                    </label>
+                </div>
+            </div>
+        </div>
         <label class="wide">
             <span>Tên khách sạn *</span>
             <input required maxlength="200" name="name" value="<?= $v('name') ?>" placeholder="LOTTE HOTEL HANOI">
@@ -63,10 +86,6 @@
             <input type="number" min="1" max="5" name="star_rating" value="<?= $v('star_rating', '5') ?>">
         </label>
 
-        <label>
-            <span>Ảnh đại diện (Thumbnail)</span>
-            <input name="thumbnail" value="<?= $v('thumbnail') ?>" placeholder="assets/images/hotel/lotte-hotel.jpg">
-        </label>
 
         <label>
             <span>Giờ nhận phòng tiêu chuẩn</span>

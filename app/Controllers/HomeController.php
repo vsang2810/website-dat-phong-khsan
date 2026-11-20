@@ -20,14 +20,16 @@ final class HomeController extends Controller
 
     public function index(): void
     {
-        $featuredRooms = $this->roomTypeModel->getFeatured(3);
+        $featuredRooms = $this->roomTypeModel->getFeatured(4);
         $hotels = $this->hotelModel->all();
+        $mainHotel = !empty($hotels) ? $hotels[0] : null;
         $services = $this->serviceModel->allActive();
         $promotions = $this->promotionModel->allActive();
         $reviews = $this->reviewModel->getFeaturedReviews(4);
 
         $this->view('client/home', [
             'title' => 'Khách sạn 5 sao sang trọng tại Hà Nội',
+            'hotel' => $mainHotel,
             'featuredRooms' => $featuredRooms,
             'hotels' => $hotels,
             'services' => $services,

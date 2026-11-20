@@ -97,7 +97,7 @@
             <?php else: foreach ($roomTypes as $rt): ?>
                 <tr>
                     <td>
-                        <img src="<?= BASE_URL . '/' . htmlspecialchars($rt['thumbnail'] ?: 'assets/images/hotel-banner.png') ?>" alt="<?= htmlspecialchars($rt['name']) ?>" style="width: 58px; height: 42px; object-fit: cover; border-radius: 4px; border: 1px solid var(--line);" onerror="this.src='<?= BASE_URL ?>/assets/images/hotel-banner.png'">
+                        <img src="<?= htmlspecialchars(asset_url($rt['thumbnail'] ?? '')) ?>" alt="<?= htmlspecialchars($rt['name']) ?>" style="width: 58px; height: 42px; object-fit: cover; border-radius: 4px; border: 1px solid var(--line);" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
                     </td>
                     <td>
                         <strong style="font-size: 14px; color: var(--ink);"><?= htmlspecialchars($rt['name'], ENT_QUOTES, 'UTF-8') ?></strong>
