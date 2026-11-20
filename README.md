@@ -131,7 +131,11 @@ Dashboard chỉ đọc dữ liệu. Chưa triển khai luồng xác nhận booki
 
 ## Quản lý hạng phòng (V3)
 
-- Hệ thống được tối ưu hóa cho mô hình quản lý **1 khách sạn duy nhất (LOTTE HOTEL HANOI)** với các hạng phòng nghỉ cao cấp.
+- Hệ thống được tối ưu hóa cho mô hình quản lý **1 khách sạn duy nhất (LOTTE HOTEL HANOI)** với các hạng phòng nghỉ cao cấp:
+  - **Standard Room**: 35 m², tối đa 2 khách, 1 giường đôi, giá niêm yết 1.800.000 ₫ / đêm.
+  - **Deluxe Room**: 42 m², tối đa 2 khách, 1 giường đôi, giá niêm yết 2.500.000 ₫ / đêm.
+  - **Executive Room**: 50 m², tối đa 2 khách, 1 giường đôi, giá niêm yết 3.500.000 ₫ / đêm.
+  - **Presidential Suite**: 120 m², tối đa 4 khách, 2 giường đôi, giá niêm yết 12.000.000 ₫ / đêm.
 - Quản lý danh sách hạng phòng: tên hạng phòng, mô tả, diện tích, sức chứa tối đa, loại giường, giá niêm yết và số phòng thực tế tương ứng.
 - Thêm mới, cập nhật hạng phòng không cần chọn khách sạn thủ công (hệ thống tự động liên kết với khách sạn duy nhất).
 - Chuyển trạng thái kinh doanh: Đang bán (`active`) hoặc Tạm ngừng (`inactive`).
