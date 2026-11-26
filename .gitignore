@@ -2,3 +2,4 @@
 !/storage/.gitkeep
 .env
 .DS_Store
+node_modules/
