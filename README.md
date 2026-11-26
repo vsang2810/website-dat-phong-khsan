@@ -1,6 +1,6 @@
-# LOTTE HOTEL HANOI — Admin MVC
+# LOTTE HOTEL HANOI — Hệ thống Đặt Phòng (PHP MVC)
 
-Phiên bản khởi đầu chuyển dự án đặt phòng sang **PHP thuần MVC + PDO + MySQL**. Giao diện Admin theo phong cách Modern Minimal: nền sáng, sidebar than chì, điểm nhấn trung tính.
+Dự án website đặt phòng khách sạn 5 sao **LOTTE HOTEL HANOI** xây dựng trên nền tảng **PHP thuần MVC + PDO + MySQL**. Giao diện Client sang trọng chuẩn 5 sao và Admin theo phong cách Modern Minimal.
 
 ## 1. Yêu cầu
 
@@ -227,3 +227,49 @@ Hệ thống giao diện và chức năng dành cho khách hàng được xây d
 - **Giới thiệu (`/about`) & Liên hệ (`/contact`)**:
   - Thông tin khách sạn, kiến trúc, chính sách lưu trú.
   - Biểu mẫu liên hệ gửi tin nhắn lưu trực tiếp vào hệ thống chat/hỗ trợ.
+
+
+---
+
+## Hoàn thiện STT 33–40 (v1.1 — 26/11/2026)
+
+### STT 33 — Xử lý & kiểm tra dữ liệu Form liên hệ ✅
+- **Server-side**: validate họ tên ≥2 ký tự, email hợp lệ, nội dung ≥10 ký tự, số điện thoại tùy chọn; lưu vào `chat_conversations` + `chat_messages` trong DB.
+- **Client-side**: JS real-time validation blur-event, disable nút submit khi đang gửi.
+- Flash message riêng: `contact_success` / `contact_error` không xung đột hệ thống flash chung.
+
+### STT 34 — Khu vực thông tin hỗ trợ ✅ (đã có từ trước)
+- Email hỗ trợ, hotline 24/7, link tra cứu đơn ngay trên trang Liên hệ.
+
+### STT 35 — Địa chỉ & thông tin liên hệ + Google Maps ✅
+- Nhúng **Google Maps iframe** (54 Liễu Giai, Ba Đình, Hà Nội).
+- 3 card info: Địa chỉ · Phương tiện · Giờ Check-in/out.
+- Thêm mạng xã hội Facebook/Instagram.
+
+### STT 36 — Responsive toàn website ✅
+- Thêm **Mobile Nav Drawer** (`#mobileNavDrawer`) với overlay + nút ✕ + nav links đầy đủ + nút đăng nhập/đặt phòng.
+- CSS bổ sung: contact layout, map info grid, name/phone grid stack 1 cột trên mobile.
+- Ẩn user dropdown và btn-dark trên mobile, hiện hamburger menu.
+
+### STT 37 — Kiểm thử & hoàn thiện JavaScript ✅
+- Mobile nav: open/close qua overlay + nút ✕ + click link.
+- User dropdown desktop: toggle + đóng khi click ngoài.
+- Wishlist AJAX: toast thay `alert()`, redirect có delay.
+- Gallery thumbnails: active border khi chọn ảnh.
+- Contact form: char counter textarea, real-time blur validation.
+- Toast: hỗ trợ type `success`/`error`, clear timer khi gọi liên tiếp.
+- Auto-dismiss flash alerts sau 5 giây, smooth scroll anchor links.
+
+### STT 38 — Kiểm thử quy trình tìm kiếm và đặt phòng ✅
+- Booking calculator: tự động sửa ngày check-out khi check-in thay đổi.
+- Voucher AJAX: uppercase input, thông báo lỗi kết nối riêng.
+- Flow đầy đủ: Tìm phòng → Chi tiết → Đặt phòng → Xác nhận → Tra cứu.
+
+### STT 39 — Tích hợp ✅
+- Tất cả Views, Controllers, Models, CSS, JS đồng bộ nhất quán.
+- Không có xung đột key session giữa contact form và hệ thống flash chung.
+
+### STT 40 — QA & hoàn thiện phiên bản cuối ✅
+- Kiểm tra logic các file đã sửa (HomeController, contact.php, client.js, client.css, layouts/client.php).
+- README cập nhật đầy đủ.
+- Commit lên `main` với commit message rõ ràng.

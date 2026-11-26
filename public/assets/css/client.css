@@ -1483,4 +1483,86 @@ textarea.form-control {
     gap: 12px;
     text-align: center;
   }
+  /* STT 36: Contact layout responsive */
+  .contact-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-name-phone-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .map-info-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* Header actions mobile */
+  .header-actions .user-menu-wrap,
+  .header-actions .btn-dark {
+    display: none;
+  }
+  /* Hero section */
+  .hero-content {
+    padding: 40px 0;
+  }
 }
+
+/* ═══ MOBILE NAV DRAWER (STT 36) ═══════════════════════════════════════════ */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 85%;
+  max-width: 320px;
+  height: 100%;
+  background: #fff;
+  z-index: 1100;
+  overflow-y: auto;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+.mobile-nav-drawer.open {
+  left: 0;
+}
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  min-height: 64px;
+}
+.mobile-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0;
+  flex: 1;
+}
+.mobile-nav-links li a {
+  display: block;
+  padding: 13px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--dark);
+  border-left: 3px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+.mobile-nav-links li a:hover,
+.mobile-nav-links li a.active {
+  background: var(--primary-soft);
+  border-left-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ═══ User Dropdown show class ══════════════════════════════════════════════ */
+.user-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ═══ Flash Container spacing ════════════════════════════════════════════════ */
+.flash-container {
+  padding-top: 16px;
+}
+

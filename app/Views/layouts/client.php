@@ -89,10 +89,44 @@
 
             <a href="<?= BASE_URL ?>/rooms" class="btn btn-dark btn-sm">Đặt phòng ngay</a>
 
-            <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Menu di động">☰</button>
+            <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Menu di động" aria-expanded="false">☰</button>
         </div>
     </div>
 </header>
+
+<!-- MOBILE NAV DRAWER (STT 36: Responsive toàn website) -->
+<div id="mobileNavDrawer" class="mobile-nav-drawer" role="navigation" aria-label="Menu di động">
+    <div class="mobile-nav-header">
+        <div class="brand">
+            <span class="brand-mark" style="width:32px;height:32px;font-size:16px;">L</span>
+            <div class="brand-text">
+                <span class="brand-title" style="font-size:14px;">LOTTE HOTEL</span>
+                <span class="brand-sub" style="font-size:10px;">HANOI · VIETNAM</span>
+            </div>
+        </div>
+        <button id="mobileNavClose" aria-label="Đóng menu" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-muted);">✕</button>
+    </div>
+    <ul class="mobile-nav-links">
+        <li><a href="<?= BASE_URL ?>/" class="<?= ($activeNav ?? '') === 'home' ? 'active' : '' ?>">🏠 Trang chủ</a></li>
+        <li><a href="<?= BASE_URL ?>/rooms" class="<?= ($activeNav ?? '') === 'rooms' ? 'active' : '' ?>">🛏 Phòng &amp; Suites</a></li>
+        <li><a href="<?= BASE_URL ?>/services" class="<?= ($activeNav ?? '') === 'services' ? 'active' : '' ?>">✨ Dịch vụ &amp; Tiện ích</a></li>
+        <li><a href="<?= BASE_URL ?>/promotions" class="<?= ($activeNav ?? '') === 'promotions' ? 'active' : '' ?>">🎁 Ưu đãi</a></li>
+        <li><a href="<?= BASE_URL ?>/booking/lookup" class="<?= ($activeNav ?? '') === 'lookup' ? 'active' : '' ?>">🔍 Tra cứu đơn</a></li>
+        <li><a href="<?= BASE_URL ?>/about" class="<?= ($activeNav ?? '') === 'about' ? 'active' : '' ?>">ℹ Về khách sạn</a></li>
+        <li><a href="<?= BASE_URL ?>/contact" class="<?= ($activeNav ?? '') === 'contact' ? 'active' : '' ?>">📞 Liên hệ</a></li>
+    </ul>
+    <div style="padding: 20px 24px; border-top: 1px solid var(--border);">
+        <?php if (Auth::check()): ?>
+            <a href="<?= BASE_URL ?>/account" class="btn btn-outline" style="display:block;width:100%;text-align:center;margin-bottom:10px;">👤 Tài khoản</a>
+            <a href="<?= BASE_URL ?>/my-bookings" class="btn btn-outline" style="display:block;width:100%;text-align:center;margin-bottom:10px;">📋 Lịch sử đặt phòng</a>
+        <?php else: ?>
+            <a href="<?= BASE_URL ?>/login" class="btn btn-outline" style="display:block;width:100%;text-align:center;margin-bottom:10px;">Đăng nhập</a>
+            <a href="<?= BASE_URL ?>/register" class="btn btn-primary" style="display:block;width:100%;text-align:center;margin-bottom:10px;">Đăng ký</a>
+        <?php endif; ?>
+        <a href="<?= BASE_URL ?>/rooms" class="btn btn-dark" style="display:block;width:100%;text-align:center;">🛏 Đặt phòng ngay</a>
+    </div>
+</div>
+<div id="mobileNavOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1099;"></div>
 
 <!-- FLASH MESSAGES -->
 <?php if (!empty($_SESSION['flash_success']) || !empty($_SESSION['flash_error']) || !empty($_SESSION['flash_warning'])): ?>
