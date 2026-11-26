@@ -1493,6 +1493,26 @@ textarea.form-control {
   .map-info-grid {
     grid-template-columns: 1fr !important;
   }
+  /* STT 13: About page responsive */
+  .about-gallery-grid {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 250px 180px !important;
+  }
+  .about-gallery-grid > div:first-child {
+    grid-row: auto !important;
+  }
+  .about-gallery-grid > div:nth-child(3) {
+    display: none;
+  }
+  .about-story-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .about-facilities-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .about-policies-grid {
+    grid-template-columns: 1fr !important;
+  }
   /* Header actions mobile */
   .header-actions .user-menu-wrap,
   .header-actions .btn-dark {

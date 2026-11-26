@@ -133,7 +133,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 10. STT 38: Validate ngày check-out phải sau check-in
+    // 10. About page gallery (STT 13)
+    const aboutMainImg = document.getElementById('aboutMainImage');
+    document.querySelectorAll('.js-about-thumb').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            if (aboutMainImg) {
+                aboutMainImg.src = thumb.src;
+                // Active state
+                document.querySelectorAll('.about-thumb-item').forEach(item => {
+                    item.style.borderColor = 'transparent';
+                    item.style.opacity = '0.7';
+                });
+                const parentItem = thumb.closest('.about-thumb-item');
+                if (parentItem) {
+                    parentItem.style.borderColor = 'var(--primary)';
+                    parentItem.style.opacity = '1';
+                }
+            }
+        });
+    });
+
+    // 11. STT 38: Validate ngày check-out phải sau check-in
     const globalCheckIn  = document.getElementById('heroCheckIn')  || document.getElementById('filterCheckIn')  || document.getElementById('bookingCheckIn');
     const globalCheckOut = document.getElementById('heroCheckOut') || document.getElementById('filterCheckOut') || document.getElementById('bookingCheckOut');
     if (globalCheckIn && globalCheckOut) {
