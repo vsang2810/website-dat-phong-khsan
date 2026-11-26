@@ -51,7 +51,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary btn-block btn-lg" style="height: 48px; margin-bottom: 16px;">
-                Hoàn tất đăng ký →
+                Hoàn tất đăng ký
             </button>
         </form>
 

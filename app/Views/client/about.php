@@ -20,7 +20,7 @@
             <div style="grid-row: 1 / 3; overflow: hidden; position: relative;">
                 <img id="aboutMainImage" src="<?= htmlspecialchars(asset_url($hotel['thumbnail'] ?? 'assets/images/hotel/lotte-hotel.jpg')) ?>" alt="<?= htmlspecialchars($hotel['name'] ?? 'LOTTE HOTEL HANOI') ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
                 <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));padding:20px 24px;">
-                    <span style="color:#fff;font-size:14px;font-weight:600;">📸 Toàn cảnh LOTTE HOTEL HANOI</span>
+                    <span style="color:#fff;font-size:14px;font-weight:600;">Toàn cảnh LOTTE HOTEL HANOI</span>
                 </div>
             </div>
             <!-- 2 ảnh phụ bên phải -->
@@ -118,29 +118,37 @@
     <!-- FACILITIES HIGHLIGHTS (STT 14 bổ sung) -->
     <div style="margin-bottom: 60px;">
         <div class="section-header" style="text-align: left; margin-bottom: 30px;">
-            <span class="section-eyebrow">WORLD-CLASS FACILITIES</span>
-            <h2 style="font-size: 26px; margin: 0;">Tiện Ích & Trải Nghiệm Đẳng Cấp</h2>
+            <span class="section-eyebrow">Tiện ích khách sạn</span>
+            <h2 style="font-size: 26px; margin: 0;">Không gian &amp; Tiện ích nội khu</h2>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" class="about-facilities-grid">
-            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s;">
-                <div style="font-size:36px;margin-bottom:12px;">🏊</div>
-                <h4 style="font-size:16px;margin-bottom:8px;">Hồ Bơi Vô Cực</h4>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s var(--ease-out);">
+                <div style="width:44px;height:44px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-grid;place-items:center;margin-bottom:12px;">
+                    <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+                </div>
+                <h4 style="font-size:16px;margin-bottom:8px;">Hồ bơi vô cực</h4>
                 <p style="font-size:13px;color:var(--text-muted);margin:0;">Hồ bơi trên cao tầng 34 với tầm nhìn toàn cảnh thành phố.</p>
             </div>
-            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s;">
-                <div style="font-size:36px;margin-bottom:12px;">💆</div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s var(--ease-out);">
+                <div style="width:44px;height:44px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-grid;place-items:center;margin-bottom:12px;">
+                    <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                </div>
                 <h4 style="font-size:16px;margin-bottom:8px;">Evian Spa</h4>
                 <p style="font-size:13px;color:var(--text-muted);margin:0;">Trung tâm chăm sóc sức khỏe cao cấp với liệu pháp quốc tế.</p>
             </div>
-            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s;">
-                <div style="font-size:36px;margin-bottom:12px;">🍽</div>
-                <h4 style="font-size:16px;margin-bottom:8px;">Nhà Hàng & Bar</h4>
-                <p style="font-size:13px;color:var(--text-muted);margin:0;">5 nhà hàng và quán bar phục vụ ẩm thực Á-Âu đa dạng.</p>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s var(--ease-out);">
+                <div style="width:44px;height:44px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-grid;place-items:center;margin-bottom:12px;">
+                    <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                </div>
+                <h4 style="font-size:16px;margin-bottom:8px;">Nhà hàng &amp; Bar</h4>
+                <p style="font-size:13px;color:var(--text-muted);margin:0;">5 nhà hàng và quán bar phục vụ ẩm thực Á–Âu đa dạng.</p>
             </div>
-            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s;">
-                <div style="font-size:36px;margin-bottom:12px;">🏋️</div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:28px 20px;text-align:center;transition:box-shadow 0.2s var(--ease-out);">
+                <div style="width:44px;height:44px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:inline-grid;place-items:center;margin-bottom:12px;">
+                    <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
+                </div>
                 <h4 style="font-size:16px;margin-bottom:8px;">Fitness Center</h4>
-                <p style="font-size:13px;color:var(--text-muted);margin:0;">Phòng tập hiện đại trang bị thiết bị Technogym hàng đầu.</p>
+                <p style="font-size:13px;color:var(--text-muted);margin:0;">Phòng tập hiện đại trang bị thiết bị Technogym.</p>
             </div>
         </div>
     </div>

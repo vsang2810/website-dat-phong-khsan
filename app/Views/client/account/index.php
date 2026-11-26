@@ -25,28 +25,34 @@
 
                 <div style="display: flex; flex-direction: column; gap: 4px;">
                     <a href="<?= BASE_URL ?>/account?tab=bookings" class="account-nav-link <?= ($activeTab === 'bookings') ? 'active' : '' ?>">
-                        📋 Lịch sử đặt phòng
+                        <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                        <span>Lịch sử đặt phòng</span>
                     </a>
                     <a href="<?= BASE_URL ?>/account?tab=profile" class="account-nav-link <?= ($activeTab === 'profile') ? 'active' : '' ?>">
-                        👤 Thông tin cá nhân
+                        <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span>Thông tin cá nhân</span>
                     </a>
                     <a href="<?= BASE_URL ?>/account?tab=password" class="account-nav-link <?= ($activeTab === 'password') ? 'active' : '' ?>">
-                        🔒 Đổi mật khẩu
+                        <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <span>Đổi mật khẩu</span>
                     </a>
                     <a href="<?= BASE_URL ?>/account?tab=wishlist" class="account-nav-link <?= ($activeTab === 'wishlist') ? 'active' : '' ?>">
-                        ❤️ Phòng yêu thích (<?= count($wishlist) ?>)
+                        <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                        <span>Phòng yêu thích (<span class="tabular-nums"><?= count($wishlist) ?></span>)</span>
                     </a>
                     <?php if (Auth::isAdmin()): ?>
                         <div style="height: 1px; background: var(--border-light); margin: 6px 0;"></div>
                         <a href="<?= BASE_URL ?>/admin" class="account-nav-link" style="color: var(--primary); font-weight: 600;">
-                            ⚙ Trang Quản trị hệ thống
+                            <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            <span>Trang Quản trị hệ thống</span>
                         </a>
                     <?php endif; ?>
                     <div style="height: 1px; background: var(--border-light); margin: 6px 0;"></div>
                     <form action="<?= BASE_URL ?>/logout" method="post" style="margin: 0;">
                         <input type="hidden" name="_csrf" value="<?= htmlspecialchars(Csrf::token()) ?>">
                         <button type="submit" class="account-nav-link" style="width: 100%; border: none; background: none; color: var(--danger); cursor: pointer; text-align: left;">
-                            ↪ Đăng xuất
+                            <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            <span>Đăng xuất</span>
                         </button>
                     </form>
                 </div>
@@ -65,9 +71,11 @@
 
                     <?php if (empty($bookings)): ?>
                         <div style="padding: 40px; text-align: center; color: var(--text-muted);">
-                            <div style="font-size: 32px; margin-bottom: 10px;">🛎</div>
+                            <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); display: inline-grid; place-items: center; margin-bottom: 12px;">
+                                <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18h20"/><path d="M4 18a8 8 0 0 1 16 0"/><path d="M12 10V6"/><path d="M10 6h4"/></svg>
+                            </div>
                             <p>Quý khách chưa có đơn đặt phòng nào.</p>
-                            <a href="<?= BASE_URL ?>/rooms" class="btn btn-outline btn-sm">Khám phá các hạng phòng ngay</a>
+                            <a href="<?= BASE_URL ?>/rooms" class="btn btn-outline btn-sm">Khám phá các hạng phòng</a>
                         </div>
                     <?php else: ?>
                         <div style="overflow-x: auto;">
@@ -95,11 +103,11 @@
                                                 <strong><?= htmlspecialchars($b['room_name'] ?? 'Phòng khách sạn') ?></strong>
                                                 <small style="display: block; color: var(--text-muted); font-size: 11px;"><?= htmlspecialchars($b['hotel_name'] ?? 'LOTTE HOTEL') ?></small>
                                             </td>
-                                            <td>
-                                                <div><?= date('d/m/Y', strtotime($b['check_in'])) ?> → <?= date('d/m/Y', strtotime($b['check_out'])) ?></div>
+                                            <td class="tabular-nums">
+                                                <div><?= date('d/m/Y', strtotime($b['check_in'])) ?> – <?= date('d/m/Y', strtotime($b['check_out'])) ?></div>
                                                 <small style="color: var(--text-muted);"><?= (int)$b['number_of_nights'] ?> đêm · <?= (int)$b['total_guests'] ?> khách</small>
                                             </td>
-                                            <td>
+                                            <td class="tabular-nums">
                                                 <strong><?= number_format((float)$b['total_amount'], 0, ',', '.') ?> ₫</strong>
                                                 <small style="display: block; font-size: 11px; color: var(--text-muted);">
                                                     <?= $b['payment_method'] === 'online' ? 'Online' : 'Tại quầy' ?>
@@ -107,15 +115,15 @@
                                             </td>
                                             <td>
                                                 <?php if ($b['booking_status'] === 'confirmed'): ?>
-                                                    <span class="status-badge status-confirmed">ĐÃ XÁC NHẬN</span>
+                                                    <span class="status-badge status-confirmed">Đã xác nhận</span>
                                                 <?php elseif ($b['booking_status'] === 'pending_hotel_payment'): ?>
-                                                    <span class="status-badge status-pending_hotel_payment">CHỜ THANH TOÁN</span>
+                                                    <span class="status-badge status-pending_hotel_payment">Chờ thanh toán</span>
                                                 <?php elseif ($b['booking_status'] === 'checked_in'): ?>
-                                                    <span class="status-badge status-checked_in">ĐÃ NHẬN PHÒNG</span>
+                                                    <span class="status-badge status-checked_in">Đã nhận phòng</span>
                                                 <?php elseif ($b['booking_status'] === 'completed'): ?>
-                                                    <span class="status-badge status-completed">HOÀN TẤT</span>
+                                                    <span class="status-badge status-completed">Hoàn tất</span>
                                                 <?php elseif ($b['booking_status'] === 'cancelled'): ?>
-                                                    <span class="status-badge status-cancelled">ĐÃ HỦY</span>
+                                                    <span class="status-badge status-cancelled">Đã hủy</span>
                                                 <?php else: ?>
                                                     <span class="status-badge status-pending"><?= htmlspecialchars($b['booking_status']) ?></span>
                                                 <?php endif; ?>
@@ -123,7 +131,8 @@
                                             <td style="text-align: right;">
                                                 <div style="display: flex; gap: 6px; justify-content: flex-end;">
                                                     <a href="<?= BASE_URL ?>/booking/success?code=<?= urlencode($b['booking_code']) ?>" class="btn btn-outline btn-sm" title="Xem phiếu đặt">
-                                                        👁 Xem
+                                                        <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                                        <span>Xem</span>
                                                     </a>
 
                                                     <?php
@@ -135,8 +144,8 @@
                                                             <input type="hidden" name="_csrf" value="<?= htmlspecialchars(Csrf::token()) ?>">
                                                             <input type="hidden" name="booking_id" value="<?= (int)$b['id'] ?>">
                                                             <input type="hidden" name="redirect" value="/account?tab=bookings">
-                                                            <button type="submit" class="btn btn-danger-outline btn-sm" title="Hủy đơn">
-                                                                ✕
+                                                            <button type="submit" class="btn btn-danger-outline btn-sm" title="Hủy đơn" aria-label="Hủy đơn">
+                                                                <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                                                             </button>
                                                         </form>
                                                     <?php endif; ?>
@@ -235,7 +244,9 @@
 
                     <?php if (empty($wishlist)): ?>
                         <div style="padding: 40px; text-align: center; color: var(--text-muted);">
-                            <div style="font-size: 32px; margin-bottom: 10px;">♥</div>
+                            <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); display: inline-grid; place-items: center; margin-bottom: 12px;">
+                                <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                            </div>
                             <p>Quý khách chưa lưu phòng yêu thích nào.</p>
                             <a href="<?= BASE_URL ?>/rooms" class="btn btn-outline btn-sm">Khám phá ngay</a>
                         </div>
@@ -245,14 +256,21 @@
                                 <div class="room-card">
                                     <div class="room-image-wrap" style="height: 180px;">
                                         <img src="<?= htmlspecialchars(asset_url($room['thumbnail'] ?? '')) ?>" alt="<?= htmlspecialchars($room['name']) ?>" class="room-image" onerror="this.src='<?= htmlspecialchars(asset_url('assets/images/hotel-banner.png')) ?>'">
-                                        <div class="room-price-badge">
+                                        <div class="room-price-badge tabular-nums">
                                             <?= number_format((float)$room['base_price'], 0, ',', '.') ?> ₫
                                         </div>
                                     </div>
                                     <div class="room-card-body" style="padding: 18px;">
                                         <h4 style="margin: 0 0 6px; font-size: 17px;"><?= htmlspecialchars($room['name']) ?></h4>
-                                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
-                                            📐 <?= (float)$room['area'] ?> m² · 🛏 <?= htmlspecialchars($room['bed_type']) ?>
+                                        <div class="room-specs tabular-nums" style="margin-bottom: 14px;">
+                                            <span class="room-spec-item">
+                                                <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                                                <span><?= (float)$room['area'] ?> m²</span>
+                                            </span>
+                                            <span class="room-spec-item">
+                                                <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+                                                <span><?= htmlspecialchars($room['bed_type']) ?></span>
+                                            </span>
                                         </div>
                                         <div class="room-card-footer">
                                             <a href="<?= BASE_URL ?>/room-detail?id=<?= (int)$room['id'] ?>" class="btn btn-outline btn-sm btn-block">Xem chi tiết</a>

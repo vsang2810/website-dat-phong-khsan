@@ -40,10 +40,19 @@
                         <div>
                             <span class="room-card-hotel"><?= htmlspecialchars($room['hotel_name']) ?></span>
                             <h4 style="margin: 0 0 6px; font-size: 18px;"><?= htmlspecialchars($room['name']) ?></h4>
-                            <div style="font-size: 13px; color: var(--text-muted);">
-                                <span>📐 <?= (float)$room['area'] ?> m²</span> ·
-                                <span>🛏 <?= htmlspecialchars($room['bed_type']) ?></span> ·
-                                <span>👥 Tối đa <?= (int)$room['max_guests'] ?> khách</span>
+                            <div class="room-specs tabular-nums" style="margin-bottom: 0;">
+                                <span class="room-spec-item">
+                                    <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                                    <span><?= (float)$room['area'] ?> m²</span>
+                                </span>
+                                <span class="room-spec-item">
+                                    <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+                                    <span><?= htmlspecialchars($room['bed_type']) ?></span>
+                                </span>
+                                <span class="room-spec-item">
+                                    <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                    <span>Tối đa <?= (int)$room['max_guests'] ?> khách</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -163,7 +172,8 @@
                         <label class="payment-radio-card active">
                             <div class="payment-radio-title">
                                 <input type="radio" name="payment_method" value="online" checked>
-                                💳 Thanh toán trực tuyến
+                                <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                                <span>Thanh toán trực tuyến</span>
                             </div>
                             <div class="payment-radio-desc">
                                 Thanh toán nhanh qua Cổng chuyển khoản ngân hàng / Quét mã VietQR / Thẻ ATM, Visa, Master. Xác nhận đơn tự động tức thì.
@@ -173,7 +183,8 @@
                         <label class="payment-radio-card">
                             <div class="payment-radio-title">
                                 <input type="radio" name="payment_method" value="pay_at_hotel">
-                                🏨 Thanh toán tại quầy
+                                <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/></svg>
+                                <span>Thanh toán tại quầy</span>
                             </div>
                             <div class="payment-radio-desc">
                                 Thanh toán bằng tiền mặt hoặc thẻ tín dụng khi quý khách đến làm thủ tục nhận phòng tại khách sạn.
@@ -229,18 +240,19 @@
                         </span>
                     </div>
 
-                    <div style="margin: 20px 0; font-size: 12px; color: var(--text-muted); line-height: 1.5;">
-                        ✓ Giá đã bao gồm thuế VAT &amp; phí phục vụ<br>
-                        ✓ Miễn phí WiFi tốc độ cao<br>
-                        ✓ Hỗ trợ hủy phòng linh hoạt trước ngày nhận
+                    <div style="margin: 20px 0; font-size: 12px; color: var(--text-muted); line-height: 1.6; display: grid; gap: 6px;">
+                        <div style="display:flex;align-items:center;gap:8px;"><svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Giá đã bao gồm thuế VAT &amp; phí phục vụ</span></div>
+                        <div style="display:flex;align-items:center;gap:8px;"><svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Miễn phí WiFi tốc độ cao</span></div>
+                        <div style="display:flex;align-items:center;gap:8px;"><svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Hỗ trợ hủy phòng linh hoạt trước ngày nhận</span></div>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block btn-lg" style="height: 52px; font-size: 16px;">
-                        Xác nhận đặt phòng ngay →
+                        Xác nhận đặt phòng
                     </button>
 
-                    <div style="margin-top: 14px; text-align: center; font-size: 11px; color: var(--text-light);">
-                        🔒 Giao dịch an toàn và bảo mật 100%
+                    <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; color: var(--text-light);">
+                        <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <span>Giao dịch được bảo mật</span>
                     </div>
                 </div>
             </div>

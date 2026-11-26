@@ -23,7 +23,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary btn-block btn-lg" style="height: 48px; margin-bottom: 16px;">
-                Đăng nhập ngay →
+                Đăng nhập
             </button>
         </form>
 

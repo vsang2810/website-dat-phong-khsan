@@ -2,13 +2,15 @@
     <div class="receipt-card">
         <!-- TOP HEADER -->
         <div class="receipt-top">
-            <div class="receipt-badge-success">✓</div>
-            <h1 style="color: #fff; font-size: 28px; margin: 0 0 8px;">Đặt Phòng Thành Công!</h1>
+            <div class="receipt-badge-success">
+                <svg class="ui-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h1 style="color: #fff; font-size: 28px; margin: 0 0 8px;">Đặt phòng thành công</h1>
             <p style="color: #c9cbcd; font-size: 14px; margin: 0;">
                 Cảm ơn quý khách đã tin tưởng và lựa chọn LOTTE HOTEL HANOI. Chúng tôi đã gửi thông tin xác nhận qua email của quý khách.
             </p>
             <div class="receipt-code-highlight">
-                MÃ ĐẶT PHÒNG: <?= htmlspecialchars($booking['booking_code']) ?>
+                Mã đặt phòng: <?= htmlspecialchars($booking['booking_code']) ?>
             </div>
         </div>
 
@@ -106,8 +108,8 @@
                     <?php endif; ?>
 
                     <tr style="font-size: 16px; background: var(--primary-soft);">
-                        <td colspan="3" style="text-align: right; font-weight: 700; color: var(--dark);">TỔNG CỘNG:</td>
-                        <td style="text-align: right; font-weight: 700; color: var(--primary); font-size: 18px;">
+                        <td colspan="3" style="text-align: right; font-weight: 600; color: var(--dark);">Tổng cộng:</td>
+                        <td class="tabular-nums" style="text-align: right; font-weight: 600; color: var(--primary); font-size: 18px;">
                             <?= number_format((float)$booking['total_amount'], 0, ',', '.') ?> ₫
                         </td>
                     </tr>
@@ -119,16 +121,22 @@
             <div style="display: flex; justify-content: space-between; align-items: center; background: #faf8f5; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 20px; margin-bottom: 24px;">
                 <div>
                     <label style="font-size: 12px; color: var(--text-muted); display: block;">Hình thức &amp; Trạng thái:</label>
-                    <div style="font-weight: 600; font-size: 14px; margin-top: 4px;">
-                        <?= $booking['payment_method'] === 'online' ? '💳 Thanh toán trực tuyến' : '🏨 Thanh toán tại quầy khi nhận phòng' ?>
+                    <div style="display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; margin-top: 4px;">
+                        <?php if ($booking['payment_method'] === 'online'): ?>
+                            <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                            <span>Thanh toán trực tuyến</span>
+                        <?php else: ?>
+                            <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/></svg>
+                            <span>Thanh toán tại quầy khi nhận phòng</span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
                 <div>
                     <?php if ($booking['payment_status'] === 'paid'): ?>
-                        <span class="status-badge status-paid" style="font-size: 13px; padding: 6px 14px;">✓ ĐÃ THANH TOÁN</span>
+                        <span class="status-badge status-paid" style="font-size: 13px; padding: 6px 14px;">Đã thanh toán</span>
                     <?php else: ?>
-                        <span class="status-badge status-pending" style="font-size: 13px; padding: 6px 14px;">⏳ CHỜ THANH TOÁN TẠI QUẦY</span>
+                        <span class="status-badge status-pending" style="font-size: 13px; padding: 6px 14px;">Chờ thanh toán tại quầy</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -142,10 +150,12 @@
             <!-- ACTION BUTTONS -->
             <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
                 <button type="button" id="printReceiptBtn" class="btn btn-outline" style="padding: 12px 24px;">
-                    🖨 In vé / Lưu phiếu xác nhận
+                    <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                    <span>In vé / Lưu phiếu xác nhận</span>
                 </button>
                 <a href="<?= BASE_URL ?>/booking/lookup?code=<?= urlencode($booking['booking_code']) ?>&contact=<?= urlencode($booking['guest_email']) ?>" class="btn btn-outline" style="padding: 12px 24px;">
-                    🔍 Tra cứu đơn hàng này
+                    <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <span>Tra cứu đơn hàng này</span>
                 </a>
                 <a href="<?= BASE_URL ?>/" class="btn btn-primary" style="padding: 12px 24px;">
                     Về trang chủ
