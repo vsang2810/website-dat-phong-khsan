@@ -18,14 +18,23 @@
 <div class="top-bar">
     <div class="container">
         <div class="top-bar-left">
-            <span class="top-bar-item">📍 54 Liễu Giai, Ba Đình, Hà Nội</span>
-            <span class="top-bar-item">📞 Hotline: <a href="tel:02433331000" class="top-bar-gold">024 3333 1000</a></span>
+            <span class="top-bar-item">
+                <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>54 Liễu Giai, Ba Đình, Hà Nội</span>
+            </span>
+            <span class="top-bar-item">
+                <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span>Hotline: <a href="tel:02433331000" class="top-bar-gold tabular-nums">024 3333 1000</a></span>
+            </span>
         </div>
         <div class="top-bar-right">
-            <span class="top-bar-item">🕒 Check-in 14:00 · Check-out 12:00</span>
-            <span class="top-bar-item">✦ Tiêu chuẩn 5 sao quốc tế</span>
+            <span class="top-bar-item tabular-nums">
+                <svg class="ui-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Check-in 14:00 · Check-out 12:00</span>
+            </span>
+            <span class="top-bar-item">Khách sạn 5 sao</span>
             <?php if (Auth::isAdmin()): ?>
-                <a href="<?= BASE_URL ?>/admin" class="top-bar-gold" style="text-decoration: underline;">⚙ Trang Quản trị (Admin)</a>
+                <a href="<?= BASE_URL ?>/admin" class="top-bar-gold" style="text-decoration: underline;">Trang Quản trị (Admin)</a>
             <?php endif; ?>
         </div>
     </div>

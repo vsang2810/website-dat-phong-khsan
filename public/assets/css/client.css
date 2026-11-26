@@ -20,14 +20,24 @@
   --danger-bg: #faeded;
   --warning: #d9822b;
   --warning-bg: #fdf5ea;
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: 16px;
   --shadow-sm: 0 2px 8px rgba(27, 30, 33, 0.04);
   --shadow-md: 0 8px 24px rgba(27, 30, 33, 0.08);
-  --shadow-lg: 0 16px 40px rgba(27, 30, 33, 0.12);
+  --shadow-lg: 0 16px 40px rgba(27, 30, 33, 0.10);
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-icon {
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 *, *::before, *::after {
@@ -204,13 +214,16 @@ h1, h2, h3, h4, h5, h6 {
   gap: 8px;
   padding: 11px 22px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.15s ease;
   white-space: nowrap;
   font-family: var(--font-sans);
+}
+.btn:active {
+  transform: scale(0.98);
 }
 .btn-primary {
   background: var(--primary);
@@ -397,46 +410,49 @@ h1, h2, h3, h4, h5, h6 {
 /* HERO SECTION */
 .hero-section {
   position: relative;
-  min-height: 580px;
+  min-height: 540px;
   background-color: #1f2226;
-  background-image: linear-gradient(rgba(17, 20, 24, 0.65), rgba(17, 20, 24, 0.75)), url('../images/hotel/lotte-hotel.jpg');
+  background-image: linear-gradient(90deg, rgba(17, 20, 24, 0.82) 0%, rgba(17, 20, 24, 0.58) 55%, rgba(17, 20, 24, 0.28) 100%), url('../images/hotel/lotte-hotel.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   color: #ffffff;
-  padding: 80px 0 120px;
+  padding: 72px 0 112px;
 }
 .hero-content {
-  max-width: 800px;
-  text-align: center;
-  margin: 0 auto;
+  max-width: 620px;
+  text-align: left;
+  margin: 0;
 }
 .hero-eyebrow {
   display: inline-block;
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.02em;
   color: var(--gold);
-  font-weight: 700;
-  margin-bottom: 16px;
-  padding: 5px 14px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 40px;
-  border: 1px solid rgba(197, 168, 128, 0.3);
+  font-weight: 500;
+  margin-bottom: 14px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.4);
 }
 .hero-title {
-  font-size: 48px;
-  font-weight: 700;
+  font-size: 46px;
+  font-weight: 600;
   color: #ffffff;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   line-height: 1.15;
 }
 .hero-lead {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 34px;
-  line-height: 1.6;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.86);
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 /* QUICK BOOKING BAR (HERO / HOME) */
@@ -464,10 +480,8 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 .form-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--text-muted);
   margin-bottom: 6px;
 }
@@ -504,17 +518,17 @@ textarea.form-control {
 }
 .section-eyebrow {
   display: block;
-  font-size: 11px;
-  letter-spacing: 2.5px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
   color: var(--primary);
-  font-weight: 700;
-  text-transform: uppercase;
+  font-weight: 500;
   margin-bottom: 8px;
 }
 .section-title {
-  font-size: 34px;
+  font-size: 32px;
+  font-weight: 600;
   color: var(--dark);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .section-desc {
   color: var(--text-muted);
@@ -528,18 +542,21 @@ textarea.form-control {
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
 }
+.rooms-grid-featured {
+  grid-template-columns: repeat(2, 1fr);
+}
 .room-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 .room-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
   border-color: #d6d1c8;
 }
 .room-image-wrap {
@@ -552,22 +569,17 @@ textarea.form-control {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.room-card:hover .room-image {
-  transform: scale(1.05);
 }
 .room-price-badge {
   position: absolute;
-  bottom: 14px;
-  right: 14px;
+  bottom: 12px;
+  right: 12px;
   background: rgba(27, 30, 33, 0.9);
-  backdrop-filter: blur(4px);
   color: #fff;
-  padding: 6px 14px;
-  border-radius: 30px;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-size: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 .room-price-badge strong {
   font-size: 16px;
@@ -624,11 +636,9 @@ textarea.form-control {
   flex: 1;
 }
 .room-card-hotel {
-  font-size: 11px;
-  letter-spacing: 1.5px;
+  font-size: 12px;
   color: var(--primary);
-  font-weight: 700;
-  text-transform: uppercase;
+  font-weight: 500;
   margin-bottom: 6px;
 }
 .room-card-title {
@@ -753,10 +763,9 @@ textarea.form-control {
   border-radius: var(--radius-md);
   padding: 28px 24px;
   text-align: center;
-  transition: all 0.3s;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .service-card:hover {
-  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--primary);
 }
@@ -788,13 +797,13 @@ textarea.form-control {
 
 /* PROMOTIONS SECTION */
 .promo-banner {
-  background: linear-gradient(135deg, #1b1e21 0%, #2f343a 100%);
+  background: #1b1e21;
   border-radius: var(--radius-lg);
   padding: 44px;
   color: #fff;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(197, 168, 128, 0.3);
+  border: 1px solid rgba(197, 168, 128, 0.25);
 }
 .promo-grid {
   display: grid;
@@ -803,8 +812,8 @@ textarea.form-control {
   margin-top: 24px;
 }
 .promo-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px dashed rgba(197, 168, 128, 0.5);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(197, 168, 128, 0.28);
   border-radius: var(--radius-md);
   padding: 22px;
   display: flex;
@@ -1453,7 +1462,7 @@ textarea.form-control {
   .hero-title {
     font-size: 32px;
   }
-  .rooms-grid, .services-grid, .promo-grid, .reviews-grid {
+  .rooms-grid, .rooms-grid-featured, .services-grid, .promo-grid, .reviews-grid {
     grid-template-columns: 1fr;
   }
   .booking-form-grid {
